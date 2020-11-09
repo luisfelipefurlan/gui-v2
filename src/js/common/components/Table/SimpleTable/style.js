@@ -5,11 +5,13 @@ const useStyles = makeStyles(theme => {
     root: {
       borderRadius: 5,
       height: '100%',
+      overflowY: 'hidden',
+      '&:hover': {
+        overflowY: 'auto',
+      },
     },
     head: {
-      backgroundColor: theme.palette.table.head,
-      color: theme.palette.common.white,
-      fontSize: '1rem',
+      backgroundColor: theme.palette.background.paper,
       fontWeight: 600,
       userSelect: 'none',
     },
