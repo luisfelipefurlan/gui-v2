@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -22,8 +22,8 @@ const validationSchema = Yup.object({
 });
 
 const LoginView = ({ location, history }) => {
-  let hasError = false;
-  let msgError = '';
+  const [hasError, setHasError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const handleSubmit = async ({ user, password }) => {
     try {
       await Authentication.login({
@@ -34,8 +34,10 @@ const LoginView = ({ location, history }) => {
     } catch ({ message }) {
       // TODO: Handle the exception more appropriately
       console.error(message);
-      hasError = true;
-      msgError = message.indexOf('404') !== -1 ? 'networkError' : 'loginError';
+      setHasError(true);
+      setMsgError(
+        message.indexOf('404') !== -1 ? 'networkError' : 'loginError',
+      );
     }
   };
   const initialState = {
