@@ -29,7 +29,6 @@ const SimpleTable = ({ columns, rows, hasTimestamp }) => {
     }
     return row[column.dataKey];
   };
-
   return (
     <TableContainer classes={{ root }}>
       <Table stickyHeader size='small' aria-label='customized table'>
