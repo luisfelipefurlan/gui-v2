@@ -10,9 +10,16 @@ const useStyles = makeStyles(theme => {
         overflowY: 'auto',
       },
     },
+    lines: {
+      padding: '14px 0px',
+    },
     head: {
-      backgroundColor: theme.palette.background.paper,
-      fontWeight: 600,
+      fontWeight: 'normal',
+      fontSize: '0.8rem',
+      lineHeight: '24px',
+      textTransform: 'none',
+      color: theme.palette.primary.dark,
+      backgroundColor: theme.palette.table.head,
       userSelect: 'none',
     },
   };
