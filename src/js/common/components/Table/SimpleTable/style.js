@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => {
       },
     },
     lines: {
-      padding: '14px 0px',
+      padding: '14px 5px',
     },
     head: {
       fontWeight: 'normal',

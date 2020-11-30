@@ -16,27 +16,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 import useStyles from './style';
 
-const Icn = ({ sortOrder, field, currentSortField }) => {
+const Icn = ({ order, field, currentSortField }) => {
   if (currentSortField !== field) return null;
-  if (sortOrder === -1) return <ArrowDropUpIcon fontSize='small' />;
+  if (order === -1) return <ArrowDropUpIcon fontSize='small' />;
   return <ArrowDropDownIcon fontSize='small' />;
 };
 
 const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
   const { head, root, lines } = useStyles();
-  const [sortOrder, setSortOrder] = useState(-1);
-  const [sortField, setSortField] = useState('');
-
-  // i really dont wanna do that... :\
+  const [sortField, setSortField] = useState({ order: -1, field: '' });
   const [rws, setRws] = useState([]);
-
-  useEffect(() => {
-    console.log('useEffect:sortOrder');
-    const sortedArray = rws.sort((a, b) => {
-      return compareAll(a[sortField], b[sortField], sortOrder);
-    });
-    setRws(sortedArray);
-  }, [rws, sortOrder, sortField]);
 
   useEffect(() => {
     console.log('useEffect:rows');
@@ -44,13 +33,12 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
     const r1 = rows.map(row => {
       return { ...row, ts: new Date(row.timestamp).getTime() };
     });
-    console.log('r1', r1);
     setRws(r1);
   }, []);
 
   const changeSorting = index => {
-    setSortField(index);
-    setSortOrder(sortOrder * -1);
+    const obj = { field: index, order: sortField.order * -1 };
+    setSortField(obj);
   };
 
   const ValueFormatter = ({ row, column }) => {
@@ -66,6 +54,12 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
     }
     return row[column.dataKey];
   };
+
+  const sortedArray = rws;
+  sortedArray.sort((a, b) => {
+    return compareAll(a[sortField.field], b[sortField.field], sortField.order);
+  });
+
   return (
     <TableContainer classes={{ root }}>
       <Table stickyHeader size='small' aria-label='customized table'>
@@ -85,9 +79,9 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
                   onClick={() => changeSorting('ts')}
                   endIcon={
                     <Icn
-                      currentSortField={sortField}
+                      currentSortField={sortField.field}
                       field='ts'
-                      sortOrder={sortOrder}
+                      order={sortField.order}
                     />
                   }
                 >
@@ -110,9 +104,9 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
                       onClick={() => changeSorting(column.dataKey)}
                       endIcon={
                         <Icn
-                          currentSortField={sortField}
+                          currentSortField={sortField.field}
                           field={column.dataKey}
-                          sortOrder={sortOrder}
+                          sortOrder={sortField.order}
                         />
                       }
                     >
@@ -125,7 +119,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rws.map((row, index) => (
+          {sortedArray.map((row, index) => (
             <TableRow hover key={`${row.timestamp}_${uuidv4()}`}>
               {withRank ? (
                 <TableCell
