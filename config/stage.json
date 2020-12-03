@@ -1,4 +1,4 @@
 {
   "env": "release",
-  "publicPath": "./"
+  "publicPath": "./v2/"
 }

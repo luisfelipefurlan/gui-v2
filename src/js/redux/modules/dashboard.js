@@ -2,6 +2,8 @@ import { Map } from 'immutable';
 import _ from 'lodash';
 import { createAction, handleActions } from 'redux-actions';
 
+import { lay, sgs, conf } from './data_layout';
+
 const START_POLLING = 'app/dashboard/START_POLLING';
 const STOP_POLLING = 'app/dashboard/STOP_POLLING';
 const SET_INTERVAL = 'app/dashboard/SET_INTERVAL';
@@ -128,12 +130,13 @@ export const reducers = {
     }),
 };
 
+console.log('lay', lay);
 export const initialState = () =>
   Map({
-    configs: {},
-    layout: [],
-    saga: {},
     data: {},
+    layout: lay,
+    configs: conf,
+    saga: sgs,
   });
 
 export default handleActions(reducers, initialState());

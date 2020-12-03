@@ -1,14 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
-<<<<<<< HEAD
-import { WidgetCard, NoData } from 'Components/Cards';
-import { SimpleTable } from 'Components/Table';
-
-const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
-  const { table } = config;
-
-  const renderTable = useCallback(() => {
-=======
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -18,10 +9,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
-import { CollapsibleTable } from 'Components/Table';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from 'Utils';
+
+import Summarizer from './summarizer';
 
 const useStyles = makeStyles(() => {
   return {
@@ -40,21 +31,11 @@ const useStyles = makeStyles(() => {
   };
 });
 
-const TableWidget = ({
-  id,
-  data,
-  config,
-  onDelete,
-  onPin,
-  onEdit,
-  deviceData,
-}) => {
+const AccountWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { table, meta } = config;
-  const withRank = !!meta.withRank;
-  const hasTimestamp = !meta.removeTimestamp;
+  const { fields, meta } = config;
 
   const { t } = useTranslation(['common']);
 
@@ -68,7 +49,6 @@ const TableWidget = ({
   };
 
   const renderSubheader = useCallback(() => {
->>>>>>> - Version to cs using Collapsable Table
     if (data && data.length) {
       const ts = data[0].timestamp;
       return `Atualizado em: ${formatDate(ts, 'DD/MM/YYYY HH:mm:ss')}`;
@@ -76,30 +56,13 @@ const TableWidget = ({
     return null;
   }, [data]);
 
-  const renderTable = useCallback(() => {
-    console.log('renderTable: deviceData', deviceData);
-    if (data && data.length && !_.isEmpty(deviceData)) {
-      return (
-        <CollapsibleTable
-          withRank={withRank}
-          columns={table}
-          deviceData={deviceData}
-          meta={meta}
-          rows={data}
-          hasTimestamp={hasTimestamp}
-        />
-      );
+  const renderSumarization = useCallback(() => {
+    console.log('data', data);
+    if (data && data.length) {
+      return <Summarizer columns={fields} meta={meta} rows={data} />;
     }
-<<<<<<< HEAD
-    return <NoData />;
-  }, [data, table]);
-  return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
-      {renderTable()}
-    </WidgetCard>
-=======
     return null;
-  }, [data, deviceData, meta, table, withRank, hasTimestamp]);
+  }, [data, fields]);
 
   return (
     <Card className={classes.card} variant='outlined'>
@@ -130,10 +93,11 @@ const TableWidget = ({
         title={config.meta.title}
         subheader={renderSubheader()}
       />
-      <CardContent className={classes.content}>{renderTable()}</CardContent>
+      <CardContent className={classes.content}>
+        {renderSumarization()}
+      </CardContent>
     </Card>
->>>>>>> - Version to cs using Collapsable Table
   );
 };
 
-export default TableWidget;
+export default AccountWidget;

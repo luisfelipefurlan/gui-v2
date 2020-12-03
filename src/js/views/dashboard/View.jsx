@@ -1,6 +1,10 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+<<<<<<< HEAD
 import React, { useCallback, useEffect } from 'react';
+=======
+import React, { useCallback, useState, useEffect } from 'react';
+>>>>>>> - Version to cs using Collapsable Table
 
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -19,8 +23,10 @@ import {
   dashboardLayout,
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
+import { Device as DeviceService } from 'Services';
 
 import { ViewContainer } from '../stateComponents';
+import { AccountWidget } from './widget/account';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
@@ -50,11 +56,19 @@ const Dashboard = props => {
     checkData,
   } = props;
 
+<<<<<<< HEAD
   const { bar, line, area, table, map, csMap } = __CONFIG__;
+=======
+  console.log('Dashboard', data);
+  const { bar, line, area, table, account } = __CONFIG__;
+>>>>>>> - Version to cs using Collapsable Table
 
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
   }, [history]);
+
+  const [deviceData, setDeviceData] = useState({});
+  console.log('deviceData', deviceData);
 
   useEffect(() => {
     if (!_.isEmpty(sagaConfig)) {
@@ -64,6 +78,18 @@ const Dashboard = props => {
   }, [sagaConfig, startPolling, stopPolling]);
 
   useEffect(() => {
+    DeviceService.getAllDevices({ number: 0, size: 9999 }, { label: '' })
+      .then(response => {
+        const { devices } = response.getDevices;
+        const dev = {};
+        devices.forEach(aux => {
+          dev[aux.id] = aux;
+        });
+        setDeviceData(dev);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     if (_.isEmpty(sagaConfig)) {
       checkData();
     }
@@ -111,6 +137,7 @@ const Dashboard = props => {
     element => {
       const { i } = element;
       const [type] = i.split('/');
+      console.log('i', i, type, configs[i]);
       switch (type) {
         case line:
           return (
@@ -155,6 +182,19 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
+                deviceData={deviceData}
+                data={data[i]}
+                config={configs[i]}
+              />
+            </div>
+          );
+        case account:
+          return (
+            <div key={i}>
+              <AccountWidget
+                id={i}
+                onDelete={onRemoveItem}
+                onPin={onPin}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -192,7 +232,11 @@ const Dashboard = props => {
           );
       }
     },
+<<<<<<< HEAD
     [area, bar, configs, line, data, onPin, onRemoveItem, table, map],
+=======
+    [area, bar, account, configs, line, data, onPin, onRemoveItem, table],
+>>>>>>> - Version to cs using Collapsable Table
   );
 
   const getHeaderContent = useCallback(() => {
@@ -235,10 +279,7 @@ const Dashboard = props => {
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
   return (
-    <ViewContainer
-      headerTitle={t('dashboard:dashboard')}
-      headerContent={getHeaderContent}
-    >
+    <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={null}>
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}
@@ -262,7 +303,7 @@ Dashboard.defaultProps = {
   rowHeight: 30,
   cols: {
     lg: 12,
-    md: 10,
+    md: 12,
     sm: 6,
     xs: 4,
     xxs: 2,

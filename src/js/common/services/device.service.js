@@ -6,6 +6,23 @@ query getDeviceHistory($filter: HistoryInput!) {
 }
 `;
 
+const GQL_DEVICES_ALL = `
+query getDevices($page: PageInput, $filter: FilterDeviceInput) {
+  getDevices(page: $page, filter: $filter) {
+    totalPages
+    currentPage
+    devices {
+      id
+      label
+      attrs{
+        label
+        valueType
+      }
+    }
+  }
+}
+`;
+
 const GQL_DEVICES_LIST = `
 query getDevices($page: PageInput, $filter: FilterDeviceInput) {
   getDevices(page: $page, filter: $filter) {
@@ -49,8 +66,23 @@ const parseDevicesListQuery = (page, filter) => {
   };
 };
 
+const parseDevicesAllQuery = (page, filter) => {
+  const variables = {
+    page,
+    filter,
+  };
+  return {
+    query: GQL_DEVICES_ALL,
+    variables: JSON.stringify(variables),
+  };
+};
+
 export const getDevicesList = (page, filter) => {
   return protectAPI(parseDevicesListQuery(page, filter));
+};
+
+export const getAllDevices = (page, filter) => {
+  return protectAPI(parseDevicesAllQuery(page, filter));
 };
 
 export const getDevicesHistoryParsed = filter => {

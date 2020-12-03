@@ -129,10 +129,13 @@ if (config.get('optimization.analyzeMode') === true) {
   );
 }
 
+let gv = process.env.GUI_VERSION;
+if (process.env.GUI_VERSION === undefined) gv = 'undefined';
+
 webpackConfig.plugins.push(
   new webpack.DefinePlugin({
     __CONFIG__: JSON.stringify(config.get('app')),
-    GUI_VERSION: JSON.stringify(process.env.GUI_VERSION),
+    GUI_VERSION: JSON.stringify(gv),
   }),
   new webpack.LoaderOptionsPlugin({
     minimize: true,

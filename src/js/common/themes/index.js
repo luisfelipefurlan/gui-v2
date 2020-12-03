@@ -29,6 +29,32 @@ const theme = createMuiTheme({
   },
 
   overrides: {
+    MuiCardHeader: {
+      root: {
+        padding: '11px 16px',
+      },
+      header: {
+        padding: '11px 16px',
+      },
+      subheader: {
+        fontSize: '0.8rem',
+        color: '#2668ba',
+        paddingLeft: '19px',
+        fontFamily: '"Raleway", "Roboto", "Helvetica", "sans-serif"',
+        letterSpacing: '0.4px',
+        paddingTop: '8px',
+      },
+    },
+    MuiTypography: {
+      h6: {
+        fontSize: '1.20rem',
+        fontFamily: '"Raleway", "Roboto", "Helvetica", "sans-serif"',
+      },
+      h5: {
+        fontSize: '1.3rem',
+        fontFamily: '"Raleway", "Roboto", "Helvetica", "sans-serif"',
+      },
+    },
     MuiButtonBase: {
       root: {
         verticalAlign: 'top',
