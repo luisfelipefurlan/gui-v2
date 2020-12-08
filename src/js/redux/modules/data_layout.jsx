@@ -1,9 +1,20 @@
 const lay = [
   {
+    w: 8,
+    h: 8,
+    x: 0,
+    y: 0,
+    i: '9/9e3e8451-36da-410e-a925-f84df631c679',
+    minW: 4,
+    minH: 6,
+    moved: false,
+    static: true,
+  },
+  {
     w: 4,
     h: 8,
     x: 4,
-    y: 0,
+    y: 8,
     i: '7/idtable1consumo',
     minW: 4,
     minH: 6,
@@ -21,17 +32,7 @@ const lay = [
     moved: false,
     static: true,
   },
-  {
-    w: 4,
-    h: 8,
-    x: 4,
-    y: 8,
-    i: '7/idtable3geracao',
-    minW: 3,
-    minH: 6,
-    moved: false,
-    static: true,
-  },
+
   {
     w: 4,
     h: 10,
@@ -48,7 +49,7 @@ const lay = [
     h: 6,
     x: 8,
     y: 0,
-    i: '8/idsum1',
+    i: '10/idsum1',
     minW: 3,
     minH: 6,
     moved: false,
@@ -57,6 +58,27 @@ const lay = [
 ];
 
 const sgs = {
+  '9/9e3e8451-36da-410e-a925-f84df631c679': {
+    query:
+      '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
+    variables:
+      '{"filter":{"devices":[{"deviceID":"2907a0","attrs":["timestamp"]},{"deviceID":"3b71d8","attrs":["timestamp"]},{"deviceID":"e5d299","attrs":["timestamp"]}],"dateFrom":"","dateTo":"","operationType":5,"lastN":1}}',
+    isRealTime: true,
+    staticAttributes: {
+      '2907a0location': {
+        value: [-22.814188, -47.070547],
+        timestamp: 0,
+      },
+      '3b71d8location': {
+        value: [-22.816802, -47.068475],
+        timestamp: 0,
+      },
+      e5d299location: {
+        value: [-22.814257, -47.070032],
+        timestamp: 0,
+      },
+    },
+  },
   '7/idtable1consumo': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
@@ -73,14 +95,6 @@ const sgs = {
     isRealTime: false,
   },
 
-  '7/idtable3geracao': {
-    query:
-      '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables:
-      '{"filter":{"devices":[ {"deviceID":"cbc62d","attrs":["energyConsumption"]}, {"deviceID":"edd9c6","attrs":["energyConsumption"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}',
-    isRealTime: false,
-  },
-
   '7/idtable4excedente': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
@@ -89,7 +103,7 @@ const sgs = {
     isRealTime: false,
   },
 
-  '8/idsum1': {
+  '10/idsum1': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables:
@@ -141,25 +155,6 @@ const conf = {
       },
     ],
   },
-  '7/idtable3geracao': {
-    meta: {
-      title: 'Geração de Energia',
-      subTitle: 'Última Atualização: ',
-      removeTimestamp: true,
-      withRank: true,
-      chart: 'energyConsumption',
-    },
-    table: [
-      {
-        dataKey: 'name',
-        name: 'Nome',
-      },
-      {
-        dataKey: 'energyConsumption',
-        name: 'Energia (kWh)',
-      },
-    ],
-  },
   '7/idtable4excedente': {
     meta: {
       title: 'Excedente de Reativos',
@@ -179,7 +174,27 @@ const conf = {
       },
     ],
   },
-  '8/idsum1': {
+  '9/9e3e8451-36da-410e-a925-f84df631c679': {
+    map: {
+      '2907a0': {
+        label: 'location',
+        name: 'Sem GPS - Carro 04',
+      },
+      '3b71d8': {
+        label: 'location',
+        name: 'CS Teste 2',
+      },
+      e5d299: {
+        label: 'location',
+        name: 'CS Teste',
+      },
+    },
+    meta: {
+      title: 'Medidores',
+      subTitle: '',
+    },
+  },
+  '10/idsum1': {
     meta: {
       title: 'Resumo do Mês',
       subTitle: '',

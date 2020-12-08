@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => {
   return {
     gridRoot: {
       flexGrow: 1,
-      padding: '0px 20px',
+      padding: '0px 8px',
       paddingTop: '10px',
     },
     attrLabel: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => {
       paddingBottom: '10px',
     },
     attrValue: {
-      fontFamily: 'Raleway',
+      fontFamily: 'Open Sans',
       fontStyle: 'normal',
       fontWeight: 'normal',
       fontSize: '24px',
@@ -48,7 +48,7 @@ const Summarizer = ({ columns, rows }) => {
       container
       key={uuidv4()}
       justify='flex-start'
-      className={classes.root}
+      className={classes.gridRoot}
     >
       {columns.map(column => {
         return (

@@ -1,10 +1,6 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-<<<<<<< HEAD
-import React, { useCallback, useEffect } from 'react';
-=======
 import React, { useCallback, useState, useEffect } from 'react';
->>>>>>> - Version to cs using Collapsable Table
 
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -29,10 +25,10 @@ import { ViewContainer } from '../stateComponents';
 import { AccountWidget } from './widget/account';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
+import { CSMapWidget } from './widget/csMap';
 import { LineChartWidget } from './widget/lineChart';
 import { MapWidget } from './widget/map';
 import { TableWidget } from './widget/table';
-import { CSMapWidget } from './widget/csMap';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -56,12 +52,7 @@ const Dashboard = props => {
     checkData,
   } = props;
 
-<<<<<<< HEAD
-  const { bar, line, area, table, map, csMap } = __CONFIG__;
-=======
-  console.log('Dashboard', data);
-  const { bar, line, area, table, account } = __CONFIG__;
->>>>>>> - Version to cs using Collapsable Table
+  const { bar, line, area, table, account, map, csMap } = __CONFIG__;
 
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
@@ -78,8 +69,9 @@ const Dashboard = props => {
   }, [sagaConfig, startPolling, stopPolling]);
 
   useEffect(() => {
-    DeviceService.getAllDevices({ number: 0, size: 9999 }, { label: '' })
+    DeviceService.getDevicesList({ number: 0, size: 9999 })
       .then(response => {
+        console.log('response', response);
         const { devices } = response.getDevices;
         const dev = {};
         devices.forEach(aux => {
@@ -232,11 +224,7 @@ const Dashboard = props => {
           );
       }
     },
-<<<<<<< HEAD
-    [area, bar, configs, line, data, onPin, onRemoveItem, table, map],
-=======
-    [area, bar, account, configs, line, data, onPin, onRemoveItem, table],
->>>>>>> - Version to cs using Collapsable Table
+    [area, bar, account, configs, line, data, onPin, onRemoveItem, table, map],
   );
 
   const getHeaderContent = useCallback(() => {
@@ -279,7 +267,10 @@ const Dashboard = props => {
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
   return (
-    <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={null}>
+    <ViewContainer
+      headerTitle={t('dashboard:dashboard')}
+      headerContent={getHeaderContent}
+    >
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}

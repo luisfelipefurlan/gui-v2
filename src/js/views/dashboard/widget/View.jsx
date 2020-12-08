@@ -10,9 +10,9 @@ import { connect } from 'react-redux';
 import { ViewContainer } from '../../stateComponents';
 import { AreaChartCard } from './areaChart';
 import { BarChartCard } from './barChart';
+import { CSMapCard } from './csMap';
 import { LineChartCard } from './lineChart';
 import { MapCard } from './map';
-import { CSMapCard } from './csMap';
 import { TableCard } from './table';
 
 const useStyles = makeStyles(() => {
@@ -56,10 +56,7 @@ const WidgetView = props => {
   }, [handleClick]);
 
   return (
-    <ViewContainer
-      headerTitle={t('dashboard:widget')}
-      headerContent={getHeaderContent}
-    >
+    <ViewContainer headerTitle={t('dashboard:widget')} headerContent={null}>
       <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />

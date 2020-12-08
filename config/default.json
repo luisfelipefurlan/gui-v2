@@ -33,12 +33,9 @@
     "donut": "5",
     "bubble": "6",
     "table": "7",
-<<<<<<< HEAD
     "map": "8",
     "csMap": "9",
-=======
-    "account": "8",
->>>>>>> - Version to cs using Collapsable Table
+    "account": "10",
     "apiUrl": "/"
   }
 }

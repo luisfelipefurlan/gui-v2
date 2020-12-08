@@ -1,14 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
-<<<<<<< HEAD
-import { WidgetCard, NoData } from 'Components/Cards';
-import { SimpleTable } from 'Components/Table';
-
-const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
-  const { table } = config;
-
-  const renderTable = useCallback(() => {
-=======
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -68,7 +59,6 @@ const TableWidget = ({
   };
 
   const renderSubheader = useCallback(() => {
->>>>>>> - Version to cs using Collapsable Table
     if (data && data.length) {
       const ts = data[0].timestamp;
       return `Atualizado em: ${formatDate(ts, 'DD/MM/YYYY HH:mm:ss')}`;
@@ -77,7 +67,7 @@ const TableWidget = ({
   }, [data]);
 
   const renderTable = useCallback(() => {
-    console.log('renderTable: deviceData', deviceData);
+    console.log('renderTable: deviceData', data, deviceData);
     if (data && data.length && !_.isEmpty(deviceData)) {
       return (
         <CollapsibleTable
@@ -90,14 +80,6 @@ const TableWidget = ({
         />
       );
     }
-<<<<<<< HEAD
-    return <NoData />;
-  }, [data, table]);
-  return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
-      {renderTable()}
-    </WidgetCard>
-=======
     return null;
   }, [data, deviceData, meta, table, withRank, hasTimestamp]);
 
@@ -132,7 +114,6 @@ const TableWidget = ({
       />
       <CardContent className={classes.content}>{renderTable()}</CardContent>
     </Card>
->>>>>>> - Version to cs using Collapsable Table
   );
 };
 

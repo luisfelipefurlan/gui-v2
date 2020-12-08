@@ -110,6 +110,7 @@ const CollapsibleTable = ({ meta, columns, rows, withRank, deviceData }) => {
   const [sortField, setSortField] = useState({ order: -1, field: '' });
   const [rws, setRws] = useState([]);
 
+  console.log("CollapsibleTable");
   useEffect(() => {
     // premanipulation to handle date sorting
     let newRows = [];
@@ -220,17 +221,14 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
   const { lines, gridLabel, gridRoot } = useStyles();
 
   const getAttr = attr => {
-    console.log('device', device, attr);
     const res = device.attrs.filter(el => {
       return el.label === attr;
     });
-    console.log('Res', res[0].valueType);
-    return res[0].valueType;
+    return res[0].staticValue;
   };
 
   const address = getAttr('medidor_endereco');
   const serialNumber = getAttr('serial');
-  console.log('CustomRow');
 
   const ValueFormatter = ({ column }) => {
     if (chartType === 'PowerDemand') {
