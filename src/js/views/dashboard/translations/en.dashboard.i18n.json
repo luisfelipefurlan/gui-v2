@@ -40,6 +40,10 @@
     "title": "Map",
     "description": "Graphs the location of the device"
   },
+  "csMap": {
+    "title": "Sustainable Campus: Map",
+    "description": "Graphs the location of the device"
+  },
   "attributes": {
     "search": "Enter the device / attribute name",
     "notFound": "No attributes found for the given filter",

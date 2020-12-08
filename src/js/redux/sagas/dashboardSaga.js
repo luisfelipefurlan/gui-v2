@@ -29,22 +29,17 @@ const getQueriesFromSchema = schema => {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const key in schema) {
+    const [type] = key.split('/');
     if (schema[key].isRealTime) {
-      realTimeQueries.push({
-        key,
-        query: schema[key],
-      });
+      realTimeQueries.push({ key, type, query: schema[key] });
     } else {
-      staticQueries.push({
-        key,
-        query: schema[key],
-      });
+      staticQueries.push({ key, type, query: schema[key] });
     }
   }
   return { staticQueries, realTimeQueries };
 };
 
-const mergeValues = (obj1, obj2) => {
+const mergeMapValues = (obj1, obj2) => {
   const obj = {};
   if (Array.isArray(obj1)) {
     return obj1;
@@ -63,6 +58,23 @@ const mergeValues = (obj1, obj2) => {
   return obj;
 };
 
+const mergeCSMapValues = (staticTime, realtime) => {
+  const obj = {};
+
+  if (staticTime) {
+    Object.entries(staticTime).forEach(([key, value]) => {
+      obj[key.slice(0, 6)] = value;
+    });
+  }
+
+  if (realtime) {
+    Object.entries(realtime).forEach(([key, value]) => {
+      obj[key.slice(0, 6)].value = value.value;
+    });
+  }
+  return obj;
+};
+
 function* pollData(queries, interval) {
   try {
     // eslint-disable-next-line no-restricted-syntax
@@ -71,14 +83,25 @@ function* pollData(queries, interval) {
         getDeviceHistoryForDashboard,
       } = yield Device.getDevicesHistoryParsed(realTimeQuery.query);
       if (getDeviceHistoryForDashboard) {
-        yield put(
-          dashboardActions.updateValues({
-            [realTimeQuery.key]: mergeValues(
-              JSON.parse(getDeviceHistoryForDashboard),
-              realTimeQuery.query.staticAttributes,
-            ),
-          }),
-        );
+        if (realTimeQuery.type === '9') {
+          yield put(
+            dashboardActions.updateValues({
+              [realTimeQuery.key]: mergeCSMapValues(
+                JSON.parse(getDeviceHistoryForDashboard),
+                realTimeQuery.query.staticAttributes,
+              ),
+            }),
+          );
+        } else {
+          yield put(
+            dashboardActions.updateValues({
+              [realTimeQuery.key]: mergeMapValues(
+                JSON.parse(getDeviceHistoryForDashboard),
+                realTimeQuery.query.staticAttributes,
+              ),
+            }),
+          );
+        }
       }
     }
     yield call(delay, interval);

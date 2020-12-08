@@ -9,6 +9,9 @@ const Wizard = LazyLoading(() =>
 const MapWizard = LazyLoading(() =>
   import('views/dashboard/widget/map/Wizard'),
 );
+const CSMapWizard = LazyLoading(() =>
+  import('views/dashboard/widget/csMap/Wizard'),
+);
 
 const Manager = props => {
   const {
@@ -17,7 +20,7 @@ const Manager = props => {
     },
     history,
   } = props;
-  const { line, area, bar, table, map } = __CONFIG__;
+  const { line, area, bar, table, map, csMap } = __CONFIG__;
 
   const toDashboard = useCallback(() => {
     history.push('/dashboard');
@@ -63,6 +66,13 @@ const Manager = props => {
       case map:
         return (
           <MapWizard
+            title={t(['map.title', 'Mapa'])}
+            toDashboard={toDashboard}
+          />
+        );
+      case csMap:
+        return (
+          <CSMapWizard
             title={t(['map.title', 'Mapa'])}
             toDashboard={toDashboard}
           />

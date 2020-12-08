@@ -26,6 +26,7 @@ import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
 import { MapWidget } from './widget/map';
 import { TableWidget } from './widget/table';
+import { CSMapWidget } from './widget/csMap';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -49,7 +50,7 @@ const Dashboard = props => {
     checkData,
   } = props;
 
-  const { bar, line, area, table, map } = __CONFIG__;
+  const { bar, line, area, table, map, csMap } = __CONFIG__;
 
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
@@ -163,6 +164,18 @@ const Dashboard = props => {
           return (
             <div key={i}>
               <MapWidget
+                id={i}
+                onDelete={onRemoveItem}
+                onPin={onPin}
+                data={data[i]}
+                config={configs[i]}
+              />
+            </div>
+          );
+        case csMap:
+          return (
+            <div key={i}>
+              <CSMapWidget
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}

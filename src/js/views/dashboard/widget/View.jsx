@@ -12,6 +12,7 @@ import { AreaChartCard } from './areaChart';
 import { BarChartCard } from './barChart';
 import { LineChartCard } from './lineChart';
 import { MapCard } from './map';
+import { CSMapCard } from './csMap';
 import { TableCard } from './table';
 
 const useStyles = makeStyles(() => {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => {
 const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
-  const { line, area, bar, table, map } = __CONFIG__;
+  const { line, area, bar, table, map, csMap } = __CONFIG__;
   const { t } = useTranslation(['dashboard']);
 
   const handleClick = useCallback(
@@ -65,6 +66,7 @@ const WidgetView = props => {
         <BarChartCard onClick={() => handleClick(bar)} />
         <TableCard onClick={() => handleClick(table)} />
         <MapCard onClick={() => handleClick(map)} />
+        <CSMapCard onClick={() => handleClick(csMap)} />
       </Grid>
     </ViewContainer>
   );
