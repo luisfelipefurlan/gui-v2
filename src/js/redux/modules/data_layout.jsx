@@ -62,18 +62,14 @@ const sgs = {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables:
-      '{"filter":{"devices":[{"deviceID":"2907a0","attrs":["timestamp"]},{"deviceID":"3b71d8","attrs":["timestamp"]},{"deviceID":"e5d299","attrs":["timestamp"]}],"dateFrom":"","dateTo":"","operationType":5,"lastN":1}}',
+      '{"filter":{"devices":[{"deviceID":"cbc62d","attrs":["energyConsumption"]},{"deviceID":"edd9c6","attrs":["energyConsumption"]}],"dateFrom":"","dateTo":"","operationType":5,"lastN":1}}',
     isRealTime: true,
     staticAttributes: {
-      '2907a0location': {
+      cbc62dlocation: {
         value: [-22.814188, -47.070547],
         timestamp: 0,
       },
-      '3b71d8location': {
-        value: [-22.816802, -47.068475],
-        timestamp: 0,
-      },
-      e5d299location: {
+      edd9c6location: {
         value: [-22.814257, -47.070032],
         timestamp: 0,
       },
@@ -176,17 +172,13 @@ const conf = {
   },
   '9/9e3e8451-36da-410e-a925-f84df631c679': {
     map: {
-      '2907a0': {
+      cbc62d: {
         label: 'location',
-        name: 'Sem GPS - Carro 04',
+        name: 'CS - Medidor 2',
       },
-      '3b71d8': {
+      edd9c6: {
         label: 'location',
-        name: 'CS Teste 2',
-      },
-      e5d299: {
-        label: 'location',
-        name: 'CS Teste',
+        name: 'CS - Medidor 1',
       },
     },
     meta: {

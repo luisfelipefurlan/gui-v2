@@ -267,10 +267,7 @@ const Dashboard = props => {
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
   return (
-    <ViewContainer
-      headerTitle={t('dashboard:dashboard')}
-      headerContent={getHeaderContent}
-    >
+    <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={null}>
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}

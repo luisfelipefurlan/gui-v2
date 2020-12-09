@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { WidgetCard } from 'Components/Cards';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import { makeStyles } from '@material-ui/core/styles';
 import { getMarkerColor } from 'Components/MapMarkers';
 import _ from 'lodash';
 import moment from 'moment';
@@ -8,6 +10,32 @@ import { Map, TileLayer, Marker, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import 'leaflet/dist/images/marker-shadow.png';
+
+const useStyles = makeStyles(theme => {
+  return {
+    card: {
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      paddingTop: '5px',
+      flexWrap: 'wrap',
+      flexDirection: 'column',
+      '&:active': {
+        boxShadow: theme.shadows[6],
+      },
+    },
+    cardContent: {
+      padding: '0 8px',
+      minHeight: 30,
+      width: '100%',
+      position: 'relative',
+      flex: 1,
+      '&:last-child': {
+        paddingBottom: 8,
+      },
+    },
+  };
+});
 
 export default ({ id, onDelete, onPin, data, config }) => {
   const [markersCounter, setMarkersCounter] = useState({
@@ -17,6 +45,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
   });
   const [markers, setMarkers] = useState([]);
   const [bounds, setBounds] = useState([[0, 0]]);
+  const classes = useStyles();
 
   const mapRef = useRef();
   const { clientHeight, clientWidth } = !mapRef.current
@@ -148,28 +177,30 @@ export default ({ id, onDelete, onPin, data, config }) => {
   };
 
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
-      <Map
-        ref={mapRef}
-        className='markercluster-map'
-        bounds={bounds}
-        zoom={7}
-        maxZoom={18}
-        minZoom={2}
-        style={{
-          height: '100%',
-          width: '100%',
-          borderRadius: 5,
-          overflow: 'hidden',
-        }}
-      >
-        <TileLayer
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {markers}
-      </Map>
-      <Totalizer />
-    </WidgetCard>
+    <Card className={classes.card} variant='outlined'>
+      <CardContent className={classes.cardContent}>
+        <Map
+          ref={mapRef}
+          className='markercluster-map'
+          bounds={bounds}
+          zoom={7}
+          maxZoom={18}
+          minZoom={2}
+          style={{
+            height: '100%',
+            width: '100%',
+            borderRadius: 5,
+            overflow: 'hidden',
+          }}
+        >
+          <TileLayer
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {markers}
+        </Map>
+        <Totalizer />
+      </CardContent>
+    </Card>
   );
 };

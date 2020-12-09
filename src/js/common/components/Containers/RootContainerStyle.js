@@ -6,6 +6,7 @@ export const useStyles = makeStyles(theme => ({
   },
   content: {
     marginTop: 64,
+    backgroundColor: theme.palette.background.clean,
     // marginBottom: 40,
     flexGrow: 1,
     padding: theme.spacing(1),
