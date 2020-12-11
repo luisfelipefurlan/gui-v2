@@ -18,83 +18,12 @@ import PropTypes from 'prop-types';
 import { formatDate, compareAll } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
+import {
+  preManipulationForPowerDemand,
+  preManipulationForConsumption,
+  preManipulationForSurplus,
+} from './csConverter';
 import useStyles from './style';
-
-const preManipulationForPowerDemand = (deviceData, rows) => {
-  console.log('maxPowerDemandNormalTime', rows);
-  let newVet = [];
-  const newObj = {};
-
-  rows.forEach(vs => {
-    const keyDevice = Object.keys(vs).reduce(key => {
-      // console.log('key,valeu', key);
-      return key !== 'timestamp' ? key : '';
-    });
-    const deviceId = keyDevice.substr(0, 6);
-    const attr = keyDevice.substr(6);
-    if (newObj[deviceId] === undefined) {
-      newObj[deviceId] = {};
-    }
-    newObj[deviceId][attr] = vs[keyDevice];
-  });
-
-  newVet = Object.keys(newObj).map(id => {
-    const line = {
-      maxPowerDemandRushTime: newObj[id].maxPowerDemandRushTime,
-      maxPowerDemandNormalTime: newObj[id].maxPowerDemandNormalTime,
-      valuemaxPowerDemandRushTime: newObj[id].maxPowerDemandRushTime.value,
-      valuemaxPowerDemandNormalTime: newObj[id].maxPowerDemandNormalTime.value,
-      id,
-      valuename: deviceData[id] ? deviceData[id].label : '',
-      name: deviceData[id] ? deviceData[id].label : '',
-    };
-    return line;
-  });
-  console.log('newVet', newVet);
-  return newVet;
-};
-
-const preManipulationForConsumption = (deviceData, rows) => {
-  const currentChart = 'energyConsumption';
-  console.log('energyConsumption', rows, deviceData);
-  let newVet = [];
-  newVet = rows.map(vs => {
-    // console.log('vs', vs);
-    const keyDevice = Object.keys(vs).reduce(key => {
-      // console.log('key,valeu', key);
-      return key !== 'timestamp' ? key : '';
-    });
-    //   console.log('keyDevice', keyDevice);
-    const newObj = {};
-    const deviceId = keyDevice.substr(0, 6);
-    newObj.id = deviceId;
-    newObj.name = deviceData[deviceId] ? deviceData[deviceId].label : '';
-    newObj[currentChart] = vs[keyDevice];
-    return newObj;
-  });
-  console.log('energyConsumption newVet', newVet);
-
-  return newVet;
-};
-
-const preManipulationForSurplus = (deviceData, rows) => {
-  const currentChart = 'surplusReactivePower';
-  console.log('surplusReactivePower', rows);
-  let newVet = [];
-  newVet = rows.map(vs => {
-    // console.log('vs', vs);
-    const keyDevice = Object.keys(vs).reduce(key => {
-      return key !== 'timestamp' ? key : '';
-    });
-    const newObj = {};
-    const deviceId = keyDevice.substr(0, 6);
-    newObj.id = deviceId;
-    newObj.name = deviceData[deviceId] ? deviceData[deviceId].label : '';
-    newObj[currentChart] = vs[keyDevice];
-    return newObj;
-  });
-  return newVet;
-};
 
 const Icn = ({ meta, order, field, currentSortField }) => {
   let auxfield = field;
@@ -110,7 +39,6 @@ const CollapsibleTable = ({ meta, columns, rows, withRank, deviceData }) => {
   const [sortField, setSortField] = useState({ order: -1, field: '' });
   const [rws, setRws] = useState([]);
 
-  console.log("CollapsibleTable");
   useEffect(() => {
     // premanipulation to handle date sorting
     let newRows = [];
@@ -221,14 +149,13 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
   const { lines, gridLabel, gridRoot } = useStyles();
 
   const getAttr = attr => {
+    // TODO: find another way to do that being more efficient
     const res = device.attrs.filter(el => {
       return el.label === attr;
     });
+    if (res[0] === undefined) return '';
     return res[0].staticValue;
   };
-
-  const address = getAttr('medidor_endereco');
-  const serialNumber = getAttr('serial');
 
   const ValueFormatter = ({ column }) => {
     if (chartType === 'PowerDemand') {
@@ -286,7 +213,7 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
             </TableCell>
           );
         })}
-        <TableCell>
+        <TableCell style={{ padding: '0px 4px 0px 0px' }}>
           <IconButton
             aria-label='expand row'
             size='small'
@@ -306,12 +233,12 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
               className={gridRoot}
             >
               <Grid item md={6} xs={12} className={gridLabel}>
-                <b>Serial:&nbsp;</b>
-                {serialNumber}
+                <b>MAC Address:&nbsp;</b>
+                {getAttr('MAC')}
               </Grid>
               <Grid item md={6} xs={12} className={gridLabel}>
-                <b>Endereço:&nbsp;</b>
-                {address}
+                <b>Localização:&nbsp;</b>
+                {getAttr('point')}
               </Grid>
             </Grid>
           </Collapse>

@@ -19,7 +19,7 @@ const theme = createMuiTheme({
       dark: red.A400,
     },
     background: {
-      clean: '#4788dc',
+      clean: '#FFF',
       default: '#FAFAFA',
       paper: '#FFF',
       login: '#dadde0',

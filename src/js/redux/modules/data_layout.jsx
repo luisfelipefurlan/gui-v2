@@ -1,10 +1,13 @@
+const DEVICE_CAMPUS_ID = '42956d';
+const COMMON_TEMPLATE_ID = '3';
+
 const lay = [
   {
     w: 8,
     h: 8,
     x: 0,
     y: 0,
-    i: '9/9e3e8451-36da-410e-a925-f84df631c679',
+    i: `9/9e3e8451-36da-410e-a925-f84df631c679`,
     minW: 4,
     minH: 6,
     moved: false,
@@ -78,32 +81,28 @@ const sgs = {
   '7/idtable1consumo': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables:
-      '{"filter":{"devices":[ {"deviceID":"cbc62d","attrs":["energyConsumption"]}, {"deviceID":"edd9c6","attrs":["energyConsumption"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}',
+    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
     isRealTime: false,
   },
 
   '7/idtable2demanda': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables:
-      '{"filter":{"devices":[ {"deviceID":"cbc62d","attrs":["maxPowerDemandRushTime","maxPowerDemandNormalTime"]}, {"deviceID":"edd9c6","attrs":["maxPowerDemandRushTime","maxPowerDemandNormalTime"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}',
+    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["maxPowerDemandRushTime","maxPowerDemandNormalTime"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
     isRealTime: false,
   },
 
   '7/idtable4excedente': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables:
-      '{"filter":{"devices":[ {"deviceID":"cbc62d","attrs":["surplusReactivePower"]}, {"deviceID":"edd9c6","attrs":["surplusReactivePower"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}',
+    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["surplusReactivePower"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
     isRealTime: false,
   },
 
   '10/idsum1': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables:
-      '{"filter":{"devices":[ {"deviceID":"42956d","attrs":["sumEnergyConsumption","sumSurplusReactivePower","maxCampusPowerDemandRushTime","maxCampusPowerDemandNormalTime"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}',
+    variables: `{"filter":{"devices":[ {"deviceID":"${DEVICE_CAMPUS_ID}","attrs":["sumEnergyConsumption","sumSurplusReactivePower","maxCampusPowerDemandRushTime","maxCampusPowerDemandNormalTime"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}`,
     isRealTime: false,
   },
 };
@@ -193,22 +192,22 @@ const conf = {
     },
     fields: [
       {
-        dataKey: '42956dsumSurplusReactivePower',
+        dataKey: `${DEVICE_CAMPUS_ID}sumSurplusReactivePower`,
         name: 'Excedente (kVArh)',
-        color: '#1863C3',
-      },
-      {
-        dataKey: '42956dsumEnergyConsumption',
-        name: 'Energia (kWh)',
         color: '#E85D97',
       },
       {
-        dataKey: '42956dmaxCampusPowerDemandRushTime',
+        dataKey: `${DEVICE_CAMPUS_ID}sumEnergyConsumption`,
+        name: 'Energia (kWh)',
+        color: '#1863C3',
+      },
+      {
+        dataKey: `${DEVICE_CAMPUS_ID}maxCampusPowerDemandRushTime`,
         name: 'Demanda - Ponta (kW)',
         color: '#23986E',
       },
       {
-        dataKey: '42956dmaxCampusPowerDemandNormalTime',
+        dataKey: `${DEVICE_CAMPUS_ID}maxCampusPowerDemandNormalTime`,
         name: 'Demanda - Fora Ponta (kW)',
         color: '#23986E',
       },

@@ -158,6 +158,15 @@ input HistoryDeviceInput {
   deviceID: String!
 }
 
+"Parameters to identify from which template and which attributes to retrieve historical data from#"
+input HistoryTemplateInput {
+  "attributes which readings are to be retrieved#"
+  attrs: [String]
+  "device selected#"
+  templateID: String!
+}
+
+
 """
 
 Parameters to query historical device data#
@@ -166,6 +175,7 @@ operationType: 1 => get last minutes#
 operationType: 2 => get last hours#
 operationType: 3 => get last days#
 operationType: 4 => get last months#
+operationType: 7 => get last months#
 lastN will be used to obtain the values of minutes, hours, days and months when the operationType is non-zero#
 """
 input HistoryInput {
@@ -173,6 +183,7 @@ input HistoryInput {
   dateTo: String
   "list of devices which attributes will be retrieved#"
   devices: [HistoryDeviceInput]!
+  templates: [HistoryTemplateInput]
   lastN: Int
   operationType: Int
 }
