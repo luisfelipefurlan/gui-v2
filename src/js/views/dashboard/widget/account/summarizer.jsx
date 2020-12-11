@@ -39,8 +39,31 @@ const useStyles = makeStyles(() => {
 const Summarizer = ({ columns, rows }) => {
   const classes = useStyles();
 
-  const ValueFormatter = ({ row, column }) => {
-    return row[column.dataKey].toFixed(2);
+  let row = {};
+  console.log('rows', rows);
+
+  rows.forEach(vs => {
+    console.log('vs', vs);
+    const obj2 = { ...vs };
+    delete obj2.timestamp;
+    row = { ...row, ...obj2 };
+  });
+  console.log('row', row);
+
+  const ValueFormatter = ({ column }) => {
+    if (row[column.dataKey] === undefined) return null;
+    if (column.dataKey.substr(6) === 'maxCampusPowerDemandNormalTime') {
+      return row[column.dataKey].value
+        ? row[column.dataKey].value.toFixed(1)
+        : '';
+    }
+    if (column.dataKey.substr(6) === 'maxCampusPowerDemandRushTime') {
+      return row[column.dataKey].value
+        ? row[column.dataKey].value.toFixed(1)
+        : '';
+    }
+
+    return row[column.dataKey].toFixed(1);
   };
 
   return (
@@ -70,7 +93,7 @@ const Summarizer = ({ columns, rows }) => {
               style={{ color: column.color }}
               className={classes.attrValue}
             >
-              <ValueFormatter row={rows[0]} column={column} />
+              <ValueFormatter column={column} />
             </Grid>
           </>
         );

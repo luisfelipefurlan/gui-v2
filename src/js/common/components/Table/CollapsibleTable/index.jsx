@@ -149,6 +149,8 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
   const { lines, gridLabel, gridRoot } = useStyles();
 
   const getAttr = attr => {
+    if (device === undefined) return '';
+
     // TODO: find another way to do that being more efficient
     const res = device.attrs.filter(el => {
       return el.label === attr;

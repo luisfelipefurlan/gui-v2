@@ -16,6 +16,7 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
     newObj[deviceId][attr] = vs[keyDevice];
   });
 
+  console.log(' newObj[deviceId][attr] ', newObj);
   newVet = Object.keys(newObj).map(id => {
     const normalTime = newObj[id].maxPowerDemandNormalTime
       ? newObj[id].maxPowerDemandNormalTime
