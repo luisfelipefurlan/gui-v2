@@ -164,7 +164,9 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
           <pre style={{ textAlign: 'center' }}>
             <b style={{ fontSize: '14px' }}>{row[column.dataKey].value}</b>{' '}
             <br />
-            {formatDate(row[column.dataKey].ts, 'DD/MM HH:mm')}
+            {row[column.dataKey].ts === 0
+              ? ''
+              : formatDate(row[column.dataKey].ts, 'DD/MM HH:mm')}
           </pre>
         );
       }

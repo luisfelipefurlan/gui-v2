@@ -1,5 +1,4 @@
 export const preManipulationForPowerDemand = (deviceData, rows) => {
-  console.log('-----------');
   console.log('maxPowerDemandNormalTime', rows);
   let newVet = [];
   const newObj = {};
@@ -18,18 +17,33 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
   });
 
   newVet = Object.keys(newObj).map(id => {
+    const normalTime = newObj[id].maxPowerDemandNormalTime
+      ? newObj[id].maxPowerDemandNormalTime
+      : '';
+    const rushTime = newObj[id].maxPowerDemandRushTime
+      ? newObj[id].maxPowerDemandRushTime
+      : '';
+
+    const pdrt = {
+      ts: rushTime.ts ? rushTime.ts : 0,
+      value: rushTime.value ? rushTime.value : '',
+    };
+    const pdnt = {
+      ts: normalTime.ts ? normalTime.ts : 0,
+      value: normalTime.value ? normalTime.value : '',
+    };
+
     const line = {
-      maxPowerDemandRushTime: newObj[id].maxPowerDemandRushTime,
-      maxPowerDemandNormalTime: newObj[id].maxPowerDemandNormalTime,
-      valuemaxPowerDemandRushTime: 0,
-      valuemaxPowerDemandNormalTime: 0,
+      maxPowerDemandRushTime: pdrt,
+      valuemaxPowerDemandRushTime: pdrt,
+      maxPowerDemandNormalTime: pdnt,
+      valuemaxPowerDemandNormalTime: pdnt,
       id,
       valuename: deviceData[id] ? deviceData[id].label : '',
       name: deviceData[id] ? deviceData[id].label : '',
     };
     return line;
   });
-  console.log('newVet', newVet);
   return newVet;
 };
 
@@ -51,8 +65,6 @@ export const preManipulationForConsumption = (deviceData, rows) => {
     newObj[currentChart] = vs[keyDevice];
     return newObj;
   });
-  console.log('energyConsumption newVet', newVet);
-
   return newVet;
 };
 
@@ -72,6 +84,5 @@ export const preManipulationForSurplus = (deviceData, rows) => {
     newObj[currentChart] = vs[keyDevice];
     return newObj;
   });
-  console.log('surplusReactivePower newVet', newVet);
   return newVet;
 };
