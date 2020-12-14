@@ -252,16 +252,6 @@ const Dashboard = props => {
             {t('common:stop')}
           </Button>
         </DevelopmentContainer>
-        <Button
-          style={{ marginLeft: 10 }}
-          size='small'
-          variant='outlined'
-          color='inherit'
-          startIcon={<AddIcon />}
-          onClick={() => handleClick()}
-        >
-          {t('common:add')}
-        </Button>
       </>
     );
   }, [handleClick, startPolling, stopPolling, sagaConfig]);

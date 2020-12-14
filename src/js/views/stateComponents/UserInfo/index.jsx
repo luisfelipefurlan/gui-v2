@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -13,12 +13,14 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { getUserInformation } from 'Utils';
 
+import LogOut from '../../logout';
 import { useStyles } from './style';
 
 export const UserInfo = () => {
   const classes = useStyles();
   const { t } = useTranslation(['common']);
   const [open, setOpen] = React.useState(false);
+  const [isLogout, setLogout] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [user, setUser] = useState({ userName: '', tenant: '', profile: '' });
   useEffect(() => {
@@ -49,6 +51,10 @@ export const UserInfo = () => {
 
   // eslint-disable-next-line no-undef
   const guiVersion = GUI_VERSION || 'undefined';
+
+  if (isLogout) {
+    return <LogOut />;
+  }
 
   return (
     <div className={classes.root}>
@@ -100,6 +106,10 @@ export const UserInfo = () => {
                         primary={user.tenant}
                         secondary={t('common:tenant')}
                       />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button onClick={() => setLogout(true)}>
+                      <ListItemText data-testid='logout' primary='Logout' />
                     </ListItem>
                   </List>
                 </ClickAwayListener>

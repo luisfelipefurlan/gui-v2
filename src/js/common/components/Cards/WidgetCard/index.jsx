@@ -52,14 +52,8 @@ export default ({ id, onDelete, onPin, config, subHeader, children }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={() => handleClose()}>
-                <ListItemText primary={t('common:edit')} />
-              </MenuItem>
               <MenuItem onClick={() => handleClose(onPin)}>
                 <ListItemText primary={t('common:pin')} />
-              </MenuItem>
-              <MenuItem onClick={() => handleClose(onDelete)}>
-                <ListItemText primary={t('common:delete')} />
               </MenuItem>
             </Menu>
           </div>

@@ -1,4 +1,4 @@
-const DEVICE_CAMPUS_ID = '775549';
+const DEVICE_CAMPUS_ID = '915e12';
 const COMMON_TEMPLATE_ID = '7';
 
 const lay = [

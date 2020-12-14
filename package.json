@@ -189,11 +189,6 @@
       "GUI_VERSION": true
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm test"
-    }
-  },
   "keywords": [
     "react",
     "redux",
