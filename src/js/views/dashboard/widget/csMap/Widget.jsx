@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Fragment } from 'react';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
+import { WidgetCard } from 'Components/Cards';
 import { getMarkerColor } from 'Components/MapMarkers';
 import _ from 'lodash';
 import moment from 'moment';
@@ -46,7 +45,6 @@ export default ({ id, onDelete, onPin, data, config }) => {
   const [markers, setMarkers] = useState([]);
   const [bounds, setBounds] = useState([[0, 0]]);
   const classes = useStyles();
-
   const mapRef = useRef();
   const { clientHeight, clientWidth } = !mapRef.current
     ? {
@@ -114,7 +112,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
             icon={getMarkerColorByTime(data[key].timestamp)}
           >
             <Tooltip>
-              <span>{config.map[key].name}</span>
+              <span>{data[key].deviceLabel}</span>
             </Tooltip>
           </Marker>
         );
@@ -177,8 +175,14 @@ export default ({ id, onDelete, onPin, data, config }) => {
   };
 
   return (
-    <Card className={classes.card} variant='outlined'>
-      <CardContent className={classes.cardContent}>
+    <WidgetCard
+      id={id}
+      onDelete={onDelete}
+      onPin={onPin}
+      config={config}
+      subHeader={null}
+    >
+      <Fragment className={classes.cardContent}>
         <Map
           ref={mapRef}
           className='markercluster-map'
@@ -200,7 +204,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
           {markers}
         </Map>
         <Totalizer />
-      </CardContent>
-    </Card>
+      </Fragment>
+    </WidgetCard>
   );
 };

@@ -58,23 +58,6 @@ const mergeMapValues = (obj1, obj2) => {
   return obj;
 };
 
-const mergeCSMapValues = (staticTime, realtime) => {
-  const obj = {};
-
-  if (staticTime) {
-    Object.entries(staticTime).forEach(([key, value]) => {
-      obj[key.slice(0, 6)] = value;
-    });
-  }
-
-  if (realtime) {
-    Object.entries(realtime).forEach(([key, value]) => {
-      obj[key.slice(0, 6)].value = value.value;
-    });
-  }
-  return obj;
-};
-
 function* pollData(queries, interval) {
   try {
     // eslint-disable-next-line no-restricted-syntax
@@ -86,10 +69,7 @@ function* pollData(queries, interval) {
         if (realTimeQuery.type === '9') {
           yield put(
             dashboardActions.updateValues({
-              [realTimeQuery.key]: mergeCSMapValues(
-                JSON.parse(getDeviceHistoryForDashboard),
-                realTimeQuery.query.staticAttributes,
-              ),
+              [realTimeQuery.key]: JSON.parse(getDeviceHistoryForDashboard),
             }),
           );
         } else {

@@ -130,7 +130,7 @@ export const reducers = {
     }),
 };
 
-console.log('lay', lay);
+// console.log('lay', lay);
 export const initialState = () =>
   Map({
     data: {},

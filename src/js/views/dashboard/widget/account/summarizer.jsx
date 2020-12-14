@@ -40,15 +40,15 @@ const Summarizer = ({ columns, rows }) => {
   const classes = useStyles();
 
   let row = {};
-  console.log('rows', rows);
+  // console.log('rows', rows);
 
   rows.forEach(vs => {
-    console.log('vs', vs);
+    // console.log('vs', vs);
     const obj2 = { ...vs };
     delete obj2.timestamp;
     row = { ...row, ...obj2 };
   });
-  console.log('row', row);
+  // console.log('row', row);
 
   const ValueFormatter = ({ column }) => {
     if (row[column.dataKey] === undefined) return null;

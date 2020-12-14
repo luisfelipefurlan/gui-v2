@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 import useStyles from './style';
 
-export default ({ id, onDelete, onPin, config, children }) => {
+export default ({ id, onDelete, onPin, config, subHeader, children }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,7 +71,7 @@ export default ({ id, onDelete, onPin, config, children }) => {
           subheader: classes.subHeaderTitle,
         }}
         title={config.meta.title}
-        subheader={config.meta.subTitle}
+        subheader={subHeader}
       />
       <CardContent className={classes.cardContent}>{children}</CardContent>
     </Card>

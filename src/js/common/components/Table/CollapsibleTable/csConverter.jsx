@@ -1,5 +1,5 @@
 export const preManipulationForPowerDemand = (deviceData, rows) => {
-  console.log('maxPowerDemandNormalTime', rows);
+  // console.log('maxPowerDemandNormalTime', rows);
   let newVet = [];
   const newObj = {};
 
@@ -16,7 +16,7 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
     newObj[deviceId][attr] = vs[keyDevice];
   });
 
-  console.log(' newObj[deviceId][attr] ', newObj);
+  // console.log(' newObj[deviceId][attr] ', newObj);
   newVet = Object.keys(newObj).map(id => {
     const normalTime = newObj[id].maxPowerDemandNormalTime
       ? newObj[id].maxPowerDemandNormalTime
@@ -50,7 +50,7 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
 
 export const preManipulationForConsumption = (deviceData, rows) => {
   const currentChart = 'energyConsumption';
-  console.log('energyConsumption', rows, deviceData);
+  // console.log('energyConsumption', rows, deviceData);
   let newVet = [];
   newVet = rows.map(vs => {
     // console.log('vs', vs);
@@ -71,7 +71,7 @@ export const preManipulationForConsumption = (deviceData, rows) => {
 
 export const preManipulationForSurplus = (deviceData, rows) => {
   const currentChart = 'surplusReactivePower';
-  console.log('surplusReactivePower', deviceData, rows);
+  // console.log('surplusReactivePower', deviceData, rows);
   let newVet = [];
   newVet = rows.map(vs => {
     // console.log('vs', vs);

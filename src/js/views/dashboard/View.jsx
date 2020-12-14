@@ -59,7 +59,7 @@ const Dashboard = props => {
   }, [history]);
 
   const [deviceData, setDeviceData] = useState({});
-  console.log('deviceData', deviceData);
+  // console.log('deviceData', deviceData);
 
   useEffect(() => {
     if (!_.isEmpty(sagaConfig)) {
@@ -71,7 +71,7 @@ const Dashboard = props => {
   useEffect(() => {
     DeviceService.getDevicesList({ number: 0, size: 9999 })
       .then(response => {
-        console.log('response', response);
+        // console.log('response', response);
         const { devices } = response.getDevices;
         const dev = {};
         devices.forEach(aux => {
@@ -129,7 +129,7 @@ const Dashboard = props => {
     element => {
       const { i } = element;
       const [type] = i.split('/');
-      console.log('i', i, type, configs[i]);
+      // console.log('i', i, type, configs[i]);
       switch (type) {
         case line:
           return (
@@ -267,7 +267,10 @@ const Dashboard = props => {
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
   return (
-    <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={null}>
+    <ViewContainer
+      headerTitle={t('dashboard:dashboard')}
+      headerContent={getHeaderContent}
+    >
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}

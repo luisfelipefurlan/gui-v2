@@ -13,16 +13,18 @@ const useStyles = makeStyles(theme => {
       },
     },
     header: {
-      padding: '12px 16px 10px 16px',
+      padding: '11px 16px 10px 16px',
     },
     headerTitle: {
       fontSize: '1.125rem',
       lineHeight: '1',
     },
     subHeaderTitle: {
-      fontSize: '0.875rem',
+      fontSize: '0.8rem',
       lineHeight: '1',
-      paddingTop: 5,
+      paddingTop: 8,
+      color: '#2668ba',
+      letterSpacing: '0.4px',
     },
     headerAction: {
       marginTop: -3,

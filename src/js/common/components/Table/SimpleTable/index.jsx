@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useStyles from './style';
 
 const preManipulationForPowerDemand = rows => {
-  console.log('maxPowerDemandNormalTime', rows);
+  // console.log('maxPowerDemandNormalTime', rows);
   let newVet = [];
   const newObj = {};
 
@@ -33,9 +33,9 @@ const preManipulationForPowerDemand = rows => {
     newObj[deviceId][attr] = vs[keyDevice];
   });
 
-  console.log('newObj', newObj); // premoinuation
+  // console.log('newObj', newObj); // premoinuation
   newVet = Object.keys(newObj).map(id => {
-    console.log('id', id);
+    // console.log('id', id);
     const line = {
       maxPowerDemandRushTime: newObj[id].maxPowerDemandRushTime,
       maxPowerDemandNormalTime: newObj[id].maxPowerDemandNormalTime,
@@ -46,13 +46,13 @@ const preManipulationForPowerDemand = rows => {
     };
     return line;
   });
-  console.log('newVet', newVet);
+  // console.log('newVet', newVet);
   return newVet;
 };
 
 const preManipulationForConsumption = rows => {
   const currentChart = 'energyConsumption';
-  console.log('energyConsumption', rows);
+  // console.log('energyConsumption', rows);
   let newVet = [];
   newVet = rows.map(vs => {
     // console.log('vs', vs);
@@ -72,7 +72,7 @@ const preManipulationForConsumption = rows => {
 
 const preManipulationForSurplus = rows => {
   const currentChart = 'surplusReactivePower';
-  console.log('surplusReactivePower', rows);
+  // console.log('surplusReactivePower', rows);
   let newVet = [];
   newVet = rows.map(vs => {
     // console.log('vs', vs);
@@ -107,7 +107,7 @@ const SimpleTable = ({ meta, columns, rows, hasTimestamp, withRank }) => {
   useEffect(() => {
     // premanipulation to handle date sorting
     let newRows = [];
-    console.log('meta.chart', meta.chart);
+    // console.log('meta.chart', meta.chart);
     if (meta.chart === 'energyConsumption') {
       newRows = preManipulationForConsumption(rows);
     } else if (meta.chart === 'surplusReactivePower') {
@@ -131,7 +131,7 @@ const SimpleTable = ({ meta, columns, rows, hasTimestamp, withRank }) => {
   };
 
   const ValueFormatter = ({ row, column }) => {
-    console.log('meta.chart', meta.chart);
+    // console.log('meta.chart', meta.chart);
     if (meta.chart === 'PowerDemand') {
       if (typeof row[column.dataKey] === 'object') {
         return (

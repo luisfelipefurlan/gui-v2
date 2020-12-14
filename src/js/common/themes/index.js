@@ -19,7 +19,6 @@ const theme = createMuiTheme({
       dark: red.A400,
     },
     background: {
-      clean: '#FFF',
       default: '#FAFAFA',
       paper: '#FFF',
       login: '#dadde0',
@@ -30,22 +29,6 @@ const theme = createMuiTheme({
   },
 
   overrides: {
-    MuiCardHeader: {
-      root: {
-        padding: '11px 16px',
-      },
-      header: {
-        padding: '11px 16px',
-      },
-      subheader: {
-        fontSize: '0.8rem',
-        color: '#2668ba',
-        paddingLeft: '19px',
-        fontFamily: '"Raleway", "Roboto", "Helvetica", "sans-serif"',
-        letterSpacing: '0.4px',
-        paddingTop: '8px',
-      },
-    },
     MuiTypography: {
       h6: {
         fontSize: '1.20rem',

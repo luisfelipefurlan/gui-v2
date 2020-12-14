@@ -1,5 +1,5 @@
-const DEVICE_CAMPUS_ID = '42956d';
-const COMMON_TEMPLATE_ID = '3';
+const DEVICE_CAMPUS_ID = '775549';
+const COMMON_TEMPLATE_ID = '7';
 
 const lay = [
   {
@@ -64,19 +64,8 @@ const sgs = {
   '9/9e3e8451-36da-410e-a925-f84df631c679': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables:
-      '{"filter":{"devices":[{"deviceID":"cbc62d","attrs":["energyConsumption"]},{"deviceID":"edd9c6","attrs":["energyConsumption"]}],"dateFrom":"","dateTo":"","operationType":5,"lastN":1}}',
-    isRealTime: true,
-    staticAttributes: {
-      cbc62dlocation: {
-        value: [-22.814188, -47.070547],
-        timestamp: 0,
-      },
-      edd9c6location: {
-        value: [-22.814257, -47.070032],
-        timestamp: 0,
-      },
-    },
+    variables: `{"filter":{"devices":[], "templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"], "staticAttrs":["point"]}],"dateFrom":"","dateTo":"","operationType":6,"lastN":1}}`,
+    isRealTime: false,
   },
   '7/idtable1consumo': {
     query:
@@ -108,6 +97,22 @@ const sgs = {
 };
 
 const conf = {
+  '9/9e3e8451-36da-410e-a925-f84df631c679': {
+    map: {
+      cbc62d: {
+        label: 'location',
+        name: 'CS - Medidor 2',
+      },
+      edd9c6: {
+        label: 'location',
+        name: 'CS - Medidor 1',
+      },
+    },
+    meta: {
+      title: 'Medidores',
+      subTitle: '',
+    },
+  },
   '7/idtable1consumo': {
     meta: {
       title: 'Consumo de Energia',
@@ -168,22 +173,6 @@ const conf = {
         name: 'Excedente (kVArh)',
       },
     ],
-  },
-  '9/9e3e8451-36da-410e-a925-f84df631c679': {
-    map: {
-      cbc62d: {
-        label: 'location',
-        name: 'CS - Medidor 2',
-      },
-      edd9c6: {
-        label: 'location',
-        name: 'CS - Medidor 1',
-      },
-    },
-    meta: {
-      title: 'Medidores',
-      subTitle: '',
-    },
   },
   '10/idsum1': {
     meta: {
