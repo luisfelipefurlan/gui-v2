@@ -20,8 +20,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {
   preManipulationForPowerDemand,
-  preManipulationForConsumption,
-  preManipulationForSurplus,
+  parseConsumptionSurplus,
 } from './csConverter';
 import useStyles from './style';
 
@@ -43,9 +42,9 @@ const CollapsibleTable = ({ meta, columns, rows, withRank, deviceData }) => {
     // premanipulation to handle date sorting
     let newRows = [];
     if (meta.chart === 'energyConsumption') {
-      newRows = preManipulationForConsumption(deviceData, rows);
+      newRows = parseConsumptionSurplus(deviceData, rows, meta.chart);
     } else if (meta.chart === 'surplusReactivePower') {
-      newRows = preManipulationForSurplus(deviceData, rows);
+      newRows = parseConsumptionSurplus(deviceData, rows, meta.chart);
     } else if (meta.chart === 'PowerDemand') {
       newRows = preManipulationForPowerDemand(deviceData, rows);
     } else {

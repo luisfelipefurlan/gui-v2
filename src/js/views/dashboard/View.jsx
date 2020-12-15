@@ -3,7 +3,6 @@ import 'react-resizable/css/styles.css';
 import React, { useCallback, useState, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import { DevelopmentContainer } from 'Components/Containers';
@@ -217,11 +216,7 @@ const Dashboard = props => {
             </div>
           );
         default:
-          return (
-            <div key={i}>
-              <AreaChartWidget id={i} onDelete={onRemoveItem} onPin={onPin} />
-            </div>
-          );
+          return <div key={i} />;
       }
     },
     [area, bar, account, configs, line, data, onPin, onRemoveItem, table, map],

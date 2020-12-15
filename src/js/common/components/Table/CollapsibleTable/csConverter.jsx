@@ -1,23 +1,22 @@
 export const preManipulationForPowerDemand = (deviceData, rows) => {
-  // console.log('maxPowerDemandNormalTime', rows);
-  let newVet = [];
   const newObj = {};
-
-  rows.forEach(vs => {
-    const keyDevice = Object.keys(vs).reduce(key => {
-      // console.log('key,valeu', key);
-      return key !== 'timestamp' ? key : '';
+  rows.forEach(entry => {
+    Object.keys(entry).forEach(key => {
+      if (key !== 'timestamp') {
+        const attributeLabel = key.includes('maxPowerDemandNormalTime')
+          ? 'maxPowerDemandNormalTime'
+          : 'maxPowerDemandRushTime';
+        const deviceId = key.replace(attributeLabel, '');
+        if (!newObj[deviceId]) {
+          newObj[deviceId] = {};
+        }
+        newObj[deviceId][attributeLabel] = entry[key];
+      }
     });
-    const deviceId = keyDevice.substr(0, 6);
-    const attr = keyDevice.substr(6);
-    if (newObj[deviceId] === undefined) {
-      newObj[deviceId] = {};
-    }
-    newObj[deviceId][attr] = vs[keyDevice];
   });
 
   // console.log(' newObj[deviceId][attr] ', newObj);
-  newVet = Object.keys(newObj).map(id => {
+  return Object.keys(newObj).map(id => {
     const normalTime = newObj[id].maxPowerDemandNormalTime
       ? newObj[id].maxPowerDemandNormalTime
       : '';
@@ -34,7 +33,7 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
       value: normalTime.value ? normalTime.value : '',
     };
 
-    const line = {
+    return {
       maxPowerDemandRushTime: pdrt,
       valuemaxPowerDemandRushTime: pdrt,
       maxPowerDemandNormalTime: pdnt,
@@ -43,47 +42,20 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
       valuename: deviceData[id] ? deviceData[id].label : '',
       name: deviceData[id] ? deviceData[id].label : '',
     };
-    return line;
   });
-  return newVet;
 };
 
-export const preManipulationForConsumption = (deviceData, rows) => {
-  const currentChart = 'energyConsumption';
-  // console.log('energyConsumption', rows, deviceData);
-  let newVet = [];
-  newVet = rows.map(vs => {
-    // console.log('vs', vs);
-    const keyDevice = Object.keys(vs).reduce(key => {
-      // console.log('key,valeu', key);
-      return key !== 'timestamp' ? key : '';
-    });
-    //   console.log('keyDevice', keyDevice);
-    const newObj = {};
-    const deviceId = keyDevice.substr(0, 6);
-    newObj.id = deviceId;
-    newObj.name = deviceData[deviceId] ? deviceData[deviceId].label : '';
-    newObj[currentChart] = vs[keyDevice];
-    return newObj;
+export const parseConsumptionSurplus = (deviceData, rows, currentChart) => {
+  const powerConsumptionArray = [];
+  Object.keys(rows[0]).forEach(key => {
+    if (key !== 'timestamp') {
+      const deviceId = key.replace(currentChart, '');
+      powerConsumptionArray.push({
+        id: deviceId,
+        name: deviceData[deviceId] ? deviceData[deviceId].label : '',
+        [currentChart]: rows[0][key],
+      });
+    }
   });
-  return newVet;
-};
-
-export const preManipulationForSurplus = (deviceData, rows) => {
-  const currentChart = 'surplusReactivePower';
-  // console.log('surplusReactivePower', deviceData, rows);
-  let newVet = [];
-  newVet = rows.map(vs => {
-    // console.log('vs', vs);
-    const keyDevice = Object.keys(vs).reduce(key => {
-      return key !== 'timestamp' ? key : '';
-    });
-    const newObj = {};
-    const deviceId = keyDevice.substr(0, 6);
-    newObj.id = deviceId;
-    newObj.name = deviceData[deviceId] ? deviceData[deviceId].label : '';
-    newObj[currentChart] = vs[keyDevice];
-    return newObj;
-  });
-  return newVet;
+  return powerConsumptionArray;
 };

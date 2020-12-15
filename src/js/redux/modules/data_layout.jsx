@@ -65,34 +65,34 @@ const sgs = {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables: `{"filter":{"devices":[], "templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"], "staticAttrs":["point"]}],"dateFrom":"","dateTo":"","operationType":6,"lastN":1}}`,
-    isRealTime: false,
+    isRealTime: true,
   },
   '7/idtable1consumo': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
-    isRealTime: false,
+    isRealTime: true,
   },
 
   '7/idtable2demanda': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["maxPowerDemandRushTime","maxPowerDemandNormalTime"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
-    isRealTime: false,
+    isRealTime: true,
   },
 
   '7/idtable4excedente': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["surplusReactivePower"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
-    isRealTime: false,
+    isRealTime: true,
   },
 
   '10/idsum1': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
     variables: `{"filter":{"devices":[ {"deviceID":"${DEVICE_CAMPUS_ID}","attrs":["sumEnergyConsumption","sumSurplusReactivePower","maxCampusPowerDemandRushTime","maxCampusPowerDemandNormalTime"]}],"dateFrom":"","dateTo":"","operationType":0,"lastN":1}}`,
-    isRealTime: false,
+    isRealTime: true,
   },
 };
 

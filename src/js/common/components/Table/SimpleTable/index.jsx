@@ -20,14 +20,14 @@ const preManipulationForPowerDemand = rows => {
   let newVet = [];
   const newObj = {};
 
-  rows.map(vs => {
+  rows.forEach(vs => {
     const keyDevice = Object.keys(vs).reduce(key => {
       // console.log('key,valeu', key);
       return key !== 'timestamp' ? key : '';
     });
     const deviceId = keyDevice.substr(0, 6);
     const attr = keyDevice.substr(6);
-    if (newObj[deviceId] == undefined) {
+    if (newObj[deviceId] === undefined) {
       newObj[deviceId] = {};
     }
     newObj[deviceId][attr] = vs[keyDevice];
