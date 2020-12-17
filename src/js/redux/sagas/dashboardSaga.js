@@ -100,8 +100,8 @@ function* pollDashboard({ payload }) {
   while (true) {
     const { end } = yield race({
       // TODO: Make the timing adjustable.
-      // For now the timer is set to 60 seconds
-      poll: call(pollData, realTimeQueries, 60000),
+      // For now the timer is set to 15 minutes
+      poll: call(pollData, realTimeQueries, 900000),
       end: take(dashboardConstants.STOP_POLLING),
     });
     if (end) {
