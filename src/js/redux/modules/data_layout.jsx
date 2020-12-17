@@ -98,16 +98,7 @@ const sgs = {
 
 const conf = {
   '9/9e3e8451-36da-410e-a925-f84df631c679': {
-    map: {
-      cbc62d: {
-        label: 'location',
-        name: 'CS - Medidor 2',
-      },
-      edd9c6: {
-        label: 'location',
-        name: 'CS - Medidor 1',
-      },
-    },
+    map: {},
     meta: {
       title: 'Medidores',
       subTitle: '',
@@ -187,17 +178,17 @@ const conf = {
       },
       {
         dataKey: `${DEVICE_CAMPUS_ID}sumEnergyConsumption`,
-        name: 'Energia (kWh)',
+        name: 'Energia (mWh)',
         color: '#1863C3',
       },
       {
         dataKey: `${DEVICE_CAMPUS_ID}maxCampusPowerDemandRushTime`,
-        name: 'Demanda - Ponta (kW)',
+        name: 'Demanda - Ponta (mW)',
         color: '#23986E',
       },
       {
         dataKey: `${DEVICE_CAMPUS_ID}maxCampusPowerDemandNormalTime`,
-        name: 'Demanda - Fora Ponta (kW)',
+        name: 'Demanda - Fora Ponta (mW)',
         color: '#23986E',
       },
     ],
