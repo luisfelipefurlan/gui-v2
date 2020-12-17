@@ -1,5 +1,5 @@
-const DEVICE_CAMPUS_ID = '915e12';
-const COMMON_TEMPLATE_ID = '7';
+const DEVICE_CAMPUS_ID = '86ab65';
+const COMMON_TEMPLATE_ID = '4';
 
 const lay = [
   {
