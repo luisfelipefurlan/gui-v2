@@ -54,13 +54,11 @@ const CollapsibleTable = ({ meta, columns, rows, withRank, deviceData }) => {
   }, [deviceData, rows, meta]);
 
   const changeSorting = index => {
-    let obj = {};
     if (meta.chart === 'PowerDemand') {
-      obj = { field: `value${index}`, order: sortField.order * -1 };
+      setSortField({ field: `value${index}`, order: sortField.order * -1 });
     } else {
-      obj = { field: index, order: sortField.order * -1 };
+      setSortField({ field: index, order: sortField.order * -1 });
     }
-    setSortField(obj);
   };
 
   const sortedArray = rws;
