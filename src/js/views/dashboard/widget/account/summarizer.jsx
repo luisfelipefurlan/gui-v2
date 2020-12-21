@@ -54,16 +54,25 @@ const Summarizer = ({ columns, rows }) => {
     if (row[column.dataKey] === undefined) return null;
     if (column.dataKey.substr(6) === 'maxCampusPowerDemandNormalTime') {
       return row[column.dataKey].value
-        ? row[column.dataKey].value.toFixed(1)
+        ? row[column.dataKey].value.toLocaleString(undefined, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          })
         : '';
     }
     if (column.dataKey.substr(6) === 'maxCampusPowerDemandRushTime') {
       return row[column.dataKey].value
-        ? row[column.dataKey].value.toFixed(1)
+        ? row[column.dataKey].value.toLocaleString(undefined, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          })
         : '';
     }
 
-    return row[column.dataKey].toFixed(1);
+    return row[column.dataKey].toLocaleString(undefined, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
   };
 
   return (
