@@ -68,7 +68,7 @@ const Dashboard = props => {
   }, [sagaConfig, startPolling, stopPolling]);
 
   useEffect(() => {
-    DeviceService.getDevicesList({ number: 0, size: 9999 })
+    DeviceService.getDevicesList({ number: 0, size: 999 })
       .then(response => {
         // console.log('response', response);
         const { devices } = response.getDevices;
