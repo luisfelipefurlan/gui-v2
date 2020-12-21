@@ -184,7 +184,9 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
     if (typeof row[column.dataKey] === 'number') {
       return (
         <span style={{ textAlign: 'center' }}>
-          <b style={{ fontSize: '14px' }}>{row[column.dataKey].toFixed(3)}</b>
+          <b style={{ fontSize: '14px' }}>
+            {row[column.dataKey].toFixed(3).toLocaleString()}
+          </b>
         </span>
       );
     }
