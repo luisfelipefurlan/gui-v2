@@ -7,7 +7,7 @@
         "url": "http://localhost:8000/graphql",
         "headers": {
           "user-agent": "JS GraphQL",
-          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJucm9OeHdXSk1tdlpENEhIRHJuV1R0blZEVXBWN0lETyIsImlhdCI6MTU5NDkxNzQ0MSwiZXhwIjoxNTk0OTE3ODYxLCJwcm9maWxlIjoiYWRtaW4iLCJncm91cHMiOlsxXSwidXNlcmlkIjoxLCJqdGkiOiIxODA5MzFjMzhmODQ4ODhhNjYwZjEyN2NhMjIzNDRmNiIsInNlcnZpY2UiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.IJT2cpPCT3toXMYCpqNZ37F8Q9tkXHMPHOxezpEy9R8"
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDWmwzVnRucWpWMmFIdGtXU29iMGJWU1lveGRGNFFCMCIsImlhdCI6MTYwODUxNzg1NCwiZXhwIjoxNjA4NTE4Mjc0LCJwcm9maWxlIjoiYWRtaW4iLCJncm91cHMiOlsxXSwidXNlcmlkIjoxLCJqdGkiOiI1ZjY3YWZhN2Q2M2YyOWFlM2I3Y2VmYzUwODBlMmRlYiIsInNlcnZpY2UiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.hdljpZ7cIERTI5x-43uWWzKprjWpFF9CCg1dCxLK9QA"
         },
         "introspect": true
       },

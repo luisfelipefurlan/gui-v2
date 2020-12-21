@@ -54,7 +54,7 @@ export const parseConsumptionSurplus = (deviceData, rows, currentChart) => {
         powerConsumptionArray.push({
           id: deviceId,
           name: deviceData[deviceId] ? deviceData[deviceId].label : '',
-          [currentChart]: rows[0][key],
+          [currentChart]: entry[key],
         });
       }
     });

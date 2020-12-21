@@ -40,17 +40,15 @@ const CollapsibleTable = ({ meta, columns, rows, withRank, deviceData }) => {
 
   useEffect(() => {
     // premanipulation to handle date sorting
-    let newRows = [];
     if (meta.chart === 'energyConsumption') {
-      newRows = parseConsumptionSurplus(deviceData, rows, meta.chart);
+      setRws(parseConsumptionSurplus(deviceData, rows, meta.chart));
     } else if (meta.chart === 'surplusReactivePower') {
-      newRows = parseConsumptionSurplus(deviceData, rows, meta.chart);
+      setRws(parseConsumptionSurplus(deviceData, rows, meta.chart));
     } else if (meta.chart === 'PowerDemand') {
-      newRows = preManipulationForPowerDemand(deviceData, rows);
+      setRws(preManipulationForPowerDemand(deviceData, rows));
     } else {
-      newRows = rows;
+      setRws(rows);
     }
-    setRws(newRows);
   }, [deviceData, rows, meta]);
 
   const changeSorting = index => {
