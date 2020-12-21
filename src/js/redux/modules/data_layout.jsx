@@ -178,17 +178,17 @@ const conf = {
       },
       {
         dataKey: `${DEVICE_CAMPUS_ID}sumEnergyConsumption`,
-        name: 'Energia (mWh)',
+        name: 'Energia (MWh)',
         color: '#1863C3',
       },
       {
         dataKey: `${DEVICE_CAMPUS_ID}maxCampusPowerDemandRushTime`,
-        name: 'Demanda - Ponta (mW)',
+        name: 'Demanda - Ponta (MW)',
         color: '#23986E',
       },
       {
         dataKey: `${DEVICE_CAMPUS_ID}maxCampusPowerDemandNormalTime`,
-        name: 'Demanda - Fora Ponta (mW)',
+        name: 'Demanda - Fora Ponta (MW)',
         color: '#23986E',
       },
     ],

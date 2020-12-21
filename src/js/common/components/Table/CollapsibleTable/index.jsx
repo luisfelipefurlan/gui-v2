@@ -159,7 +159,9 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
       if (typeof row[column.dataKey] === 'object') {
         return (
           <pre style={{ textAlign: 'center' }}>
-            <b style={{ fontSize: '14px' }}>{row[column.dataKey].value}</b>{' '}
+            <b style={{ fontSize: '14px' }}>
+              {row[column.dataKey].value.toLocaleString()}
+            </b>{' '}
             <br />
             {row[column.dataKey].ts === 0
               ? ''
