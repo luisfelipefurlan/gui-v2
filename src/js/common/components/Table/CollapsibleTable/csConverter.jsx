@@ -44,20 +44,3 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
     };
   });
 };
-
-export const parseConsumptionSurplus = (deviceData, rows, currentChart) => {
-  const powerConsumptionArray = [];
-  rows.forEach(entry => {
-    Object.keys(entry).forEach(key => {
-      if (key !== 'timestamp') {
-        const deviceId = key.replace(currentChart, '');
-        powerConsumptionArray.push({
-          id: deviceId,
-          name: deviceData[deviceId] ? deviceData[deviceId].label : '',
-          [currentChart]: entry[key],
-        });
-      }
-    });
-  });
-  return powerConsumptionArray;
-};

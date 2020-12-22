@@ -35,7 +35,6 @@ const lay = [
     moved: false,
     static: true,
   },
-
   {
     w: 4,
     h: 10,
@@ -70,24 +69,21 @@ const sgs = {
   '7/idtable1consumo': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"], "staticAttrs":["point", "MAC", "serial"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
+    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"], "staticAttrs":["point", "MAC", "serial"]}],"dateFrom":"","dateTo":"","operationType":8,"lastN":1}}`,
     isRealTime: true,
   },
-
   '7/idtable2demanda': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["maxPowerDemandRushTime","maxPowerDemandNormalTime"], "staticAttrs":["point", "MAC", "serial"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
+    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["maxPowerDemandRushTime","maxPowerDemandNormalTime"], "staticAttrs":["point", "MAC", "serial"]}],"dateFrom":"","dateTo":"","operationType":8,"lastN":1}}`,
     isRealTime: true,
   },
-
   '7/idtable4excedente': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["surplusReactivePower"], "staticAttrs":["point", "MAC", "serial"]}],"dateFrom":"","dateTo":"","operationType":7,"lastN":1}}`,
+    variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["surplusReactivePower"], "staticAttrs":["point", "MAC", "serial"]}],"dateFrom":"","dateTo":"","operationType":8,"lastN":1}}`,
     isRealTime: true,
   },
-
   '10/idsum1': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
@@ -114,12 +110,14 @@ const conf = {
     },
     table: [
       {
-        dataKey: 'name',
+        dataKey: 'deviceLabel',
         name: 'Nome',
+        align: 'left',
       },
       {
         dataKey: 'energyConsumption',
         name: 'Energia (kWh)',
+        align: 'right',
       },
     ],
   },
@@ -133,16 +131,19 @@ const conf = {
     },
     table: [
       {
-        dataKey: 'name',
+        dataKey: 'deviceLabel',
         name: 'Nome',
+        align: 'left',
       },
       {
         dataKey: 'maxPowerDemandRushTime',
         name: 'Ponta (kW)',
+        align: 'right',
       },
       {
         dataKey: 'maxPowerDemandNormalTime',
         name: 'Fora Ponta (kW)',
+        align: 'right',
       },
     ],
   },
@@ -156,12 +157,14 @@ const conf = {
     },
     table: [
       {
-        dataKey: 'name',
+        dataKey: 'deviceLabel',
         name: 'Nome',
+        align: 'left',
       },
       {
         dataKey: 'surplusReactivePower',
         name: 'Excedente (kVArh)',
+        align: 'right',
       },
     ],
   },

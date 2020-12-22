@@ -83,7 +83,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
         green: green + 1,
       };
     }
-    if (hour <= 2) {
+    if (hour <= 24) {
       return {
         red,
         yellow: yellow + 1,

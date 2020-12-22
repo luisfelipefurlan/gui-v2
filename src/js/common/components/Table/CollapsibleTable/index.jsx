@@ -14,14 +14,11 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { formatDate, compareAll } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  preManipulationForPowerDemand,
-  parseConsumptionSurplus,
-} from './csConverter';
 import useStyles from './style';
 
 const Icn = ({ meta, order, field, currentSortField }) => {
@@ -33,97 +30,111 @@ const Icn = ({ meta, order, field, currentSortField }) => {
   return <ArrowDropDownIcon fontSize='small' />;
 };
 
-const CollapsibleTable = ({ meta, columns, rows, withRank, deviceData }) => {
+const CollapsibleTable = ({ meta, columns, rows, withRank }) => {
   const { head, root } = useStyles();
   const [sortField, setSortField] = useState({ order: -1, field: '' });
-  const [rws, setRws] = useState([]);
+  const [sortedArray, setSortedArray] = useState([]);
+  const [renderTable, setRenderTable] = useState([]);
 
   useEffect(() => {
-    // premanipulation to handle date sorting
-    if (meta.chart === 'energyConsumption') {
-      setRws(parseConsumptionSurplus(deviceData, rows, meta.chart));
-    } else if (meta.chart === 'surplusReactivePower') {
-      setRws(parseConsumptionSurplus(deviceData, rows, meta.chart));
-    } else if (meta.chart === 'PowerDemand') {
-      setRws(preManipulationForPowerDemand(deviceData, rows));
-    } else {
-      setRws(rows);
-    }
-  }, [deviceData, rows, meta]);
+    // convert object to array
+    setSortedArray(Object.values(rows));
+  }, [rows]);
 
   const changeSorting = index => {
-    if (meta.chart === 'PowerDemand') {
-      setSortField({ field: `value${index}`, order: sortField.order * -1 });
-    } else {
-      setSortField({ field: index, order: sortField.order * -1 });
-    }
+    setSortField({ field: index, order: sortField.order * -1 });
   };
 
-  const sortedArray = rws;
-  sortedArray.sort((a, b) => {
-    return compareAll(a[sortField.field], b[sortField.field], sortField.order);
-  });
-
-  return (
-    <TableContainer classes={{ root }}>
-      <Table stickyHeader size='small' aria-label='customized table'>
-        <TableHead key='theader'>
-          <TableRow key='headerrow'>
-            {withRank ? (
-              <TableCell key='rank' classes={{ head }}>
-                #
-              </TableCell>
-            ) : null}
-            {columns.map(column => {
-              return (
-                <TableCell
-                  key={column.dataKey}
-                  classes={{ head }}
-                  align='center'
-                >
-                  <Button
-                    color='inherit'
-                    size='small'
-                    classes={{ root: head }}
-                    onClick={() => changeSorting(column.dataKey)}
-                    endIcon={
-                      <Icn
-                        meta={meta}
-                        currentSortField={sortField.field}
-                        field={column.dataKey}
-                        order={sortField.order}
-                      />
-                    }
-                  >
-                    {column.name}
-                  </Button>
+  useEffect(() => {
+    if (!_.isEmpty(sortedArray)) {
+      switch (sortField.field) {
+        case 'maxPowerDemandRushTime':
+        case 'maxPowerDemandNormalTime':
+          setSortedArray(
+            sortedArray.sort((a, b) =>
+              compareAll(
+                a[sortField.field].value,
+                b[sortField.field].value,
+                sortField.order,
+              ),
+            ),
+          );
+          break;
+        default:
+          setSortedArray(
+            sortedArray.sort((a, b) =>
+              compareAll(
+                a[sortField.field],
+                b[sortField.field],
+                sortField.order,
+              ),
+            ),
+          );
+      }
+    }
+    setRenderTable(
+      <TableContainer classes={{ root }}>
+        <Table stickyHeader size='small' aria-label='customized table'>
+          <TableHead key='theader'>
+            <TableRow key='headerrow'>
+              {withRank ? (
+                <TableCell key='rank' classes={{ head }} align='center'>
+                  #
                 </TableCell>
+              ) : null}
+              {columns.map(column => {
+                return (
+                  <TableCell
+                    key={column.dataKey}
+                    classes={{ head }}
+                    align={column.align}
+                  >
+                    <Button
+                      color='inherit'
+                      size='small'
+                      classes={{ root: head }}
+                      onClick={() => changeSorting(column.dataKey)}
+                      endIcon={
+                        <Icn
+                          meta={meta}
+                          currentSortField={sortField.field}
+                          field={column.dataKey}
+                          order={sortField.order}
+                        />
+                      }
+                    >
+                      {column.name}
+                    </Button>
+                  </TableCell>
+                );
+              })}
+              <TableCell key='opts' classes={{ head }} />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sortedArray.map((row, index) => {
+              return (
+                <CustomRow
+                  index={index}
+                  columns={columns}
+                  chartType={meta.chart}
+                  key={`line${uuidv4()}`}
+                  withRank={withRank}
+                  row={row}
+                />
               );
             })}
-            <TableCell key='opts' classes={{ head }} />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {sortedArray.map((row, index) => (
-            <CustomRow
-              index={index}
-              columns={columns}
-              device={deviceData[row.id]}
-              chartType={meta.chart}
-              key={`line${uuidv4()}`}
-              withRank={withRank}
-              row={row}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+          </TableBody>
+        </Table>
+      </TableContainer>,
+    );
+  }, [sortField, sortedArray]);
+
+  return renderTable;
 };
 
 CollapsibleTable.defaultProps = {
   rows: [],
-  deviceData: {},
   withRank: false,
 };
 
@@ -134,31 +145,26 @@ CollapsibleTable.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  deviceData: PropTypes.shape({}),
   rows: PropTypes.array,
   withRank: PropTypes.bool,
 };
 
-function CustomRow({ device, index, columns, row, withRank, chartType }) {
+function CustomRow({ index, columns, row, withRank, chartType }) {
   const [open, setOpen] = useState(false);
   const { lines, gridLabel, gridRoot } = useStyles();
 
   const getAttr = attr => {
-    if (device === undefined) return '';
-
-    // TODO: find another way to do that being more efficient
-    const res = device.attrs.filter(el => {
-      return el.label === attr;
-    });
-    if (res[0] === undefined) return '';
-    return res[0].staticValue;
+    if (row[attr]) {
+      return row[attr];
+    }
+    return '-';
   };
 
   const ValueFormatter = ({ column }) => {
     if (chartType === 'PowerDemand') {
       if (typeof row[column.dataKey] === 'object') {
         return (
-          <pre style={{ textAlign: 'center' }}>
+          <pre style={{ textAlign: 'inherit' }}>
             <b style={{ fontSize: '14px' }}>
               {row[column.dataKey].value.toLocaleString()}
             </b>{' '}
@@ -171,7 +177,7 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
       }
     }
 
-    if (!row[column.dataKey]) {
+    if (!row[column.dataKey] && row[column.dataKey] !== 0) {
       return '-';
     }
     if (typeof row[column.dataKey] === 'object') {
@@ -213,7 +219,7 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
             <TableCell
               classes={{ body: lines }}
               key={`${column.dataKey}_${uuidv4()}`}
-              align='center'
+              align={column.align}
             >
               <ValueFormatter column={column} />
             </TableCell>
@@ -230,7 +236,11 @@ function CustomRow({ device, index, columns, row, withRank, chartType }) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={6}
+          align='left'
+        >
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Grid
               container

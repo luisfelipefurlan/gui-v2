@@ -5,15 +5,7 @@ import { CollapsibleTable } from 'Components/Table';
 import _ from 'lodash';
 import { formatDate } from 'Utils';
 
-const TableWidget = ({
-  id,
-  data,
-  config,
-  onDelete,
-  onPin,
-  onEdit,
-  deviceData,
-}) => {
+const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
   const { table, meta } = config;
   const withRank = !!meta.withRank;
   const hasTimestamp = !meta.removeTimestamp;
@@ -27,12 +19,11 @@ const TableWidget = ({
   }, [data]);
 
   const renderTable = useCallback(() => {
-    if (data && data.length && !_.isEmpty(deviceData)) {
+    if (!_.isEmpty(data)) {
       return (
         <CollapsibleTable
           withRank={withRank}
           columns={table}
-          deviceData={deviceData}
           meta={meta}
           rows={data}
           hasTimestamp={hasTimestamp}
@@ -40,7 +31,7 @@ const TableWidget = ({
       );
     }
     return null;
-  }, [data, deviceData, meta, table, withRank, hasTimestamp]);
+  }, [data, meta, table, withRank, hasTimestamp]);
 
   return (
     <WidgetCard

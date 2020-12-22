@@ -57,9 +57,6 @@ const Dashboard = props => {
     history.push('/dashboard/widget');
   }, [history]);
 
-  const [deviceData, setDeviceData] = useState({});
-  // console.log('deviceData', deviceData);
-
   useEffect(() => {
     if (!_.isEmpty(sagaConfig)) {
       startPolling(sagaConfig);
@@ -68,19 +65,6 @@ const Dashboard = props => {
   }, [sagaConfig, startPolling, stopPolling]);
 
   useEffect(() => {
-    DeviceService.getDevicesList({ number: 0, size: 999 })
-      .then(response => {
-        // console.log('response', response);
-        const { devices } = response.getDevices;
-        const dev = {};
-        devices.forEach(aux => {
-          dev[aux.id] = aux;
-        });
-        setDeviceData(dev);
-      })
-      .catch(error => {
-        console.error(error);
-      });
     if (_.isEmpty(sagaConfig)) {
       checkData();
     }
@@ -173,7 +157,6 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
-                deviceData={deviceData}
                 data={data[i]}
                 config={configs[i]}
               />
