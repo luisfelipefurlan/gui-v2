@@ -68,7 +68,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
     if (hour <= 1) {
       return getMarkerColor('#008b02');
     }
-    if (hour <= 2) {
+    if (hour <= 24) {
       return getMarkerColor('#fccb00');
     }
     return getMarkerColor('#b80000');

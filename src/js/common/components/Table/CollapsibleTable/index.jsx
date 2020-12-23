@@ -192,8 +192,8 @@ function CustomRow({ index, columns, row, withRank, chartType }) {
         <span style={{ textAlign: 'center' }}>
           <b style={{ fontSize: '14px' }}>
             {row[column.dataKey].toLocaleString(undefined, {
-              minimumFractionDigits: 3,
-              maximumFractionDigits: 3,
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
             })}
           </b>
         </span>
