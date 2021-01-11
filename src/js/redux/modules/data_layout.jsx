@@ -1,7 +1,9 @@
-const DEVICE_CAMPUS_ID = '86ab65';
-const COMMON_TEMPLATE_ID = '4';
+// export const DEVICE_CAMPUS_ID = '86ab65';
+// export const COMMON_TEMPLATE_ID = '4';
+export const DEVICE_CAMPUS_ID = '915e12';
+export const COMMON_TEMPLATE_ID = '7';
 
-const lay = [
+export const lay = [
   {
     w: 8,
     h: 8,
@@ -59,7 +61,7 @@ const lay = [
   },
 ];
 
-const sgs = {
+export const sgs = {
   '9/9e3e8451-36da-410e-a925-f84df631c679': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
@@ -92,7 +94,7 @@ const sgs = {
   },
 };
 
-const conf = {
+export const conf = {
   '9/9e3e8451-36da-410e-a925-f84df631c679': {
     map: {},
     meta: {
@@ -198,4 +200,16 @@ const conf = {
   },
 };
 
-export { lay, conf, sgs };
+export const queryAllDevices = (dateFrom = '', dateTo = '') => ({
+  query:
+    '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
+  variables: `{"filter":{"devices":[],"templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["surplusReactivePower","energyConsumption", "maxPowerDemandRushTime","maxPowerDemandNormalTime"], "staticAttrs":["label","point", "MAC", "serial"]}],"dateFrom":"${dateFrom}","dateTo":"${dateTo}","operationType":8,"lastN":1}}`,
+  isRealTime: true,
+});
+
+export const queryCampusDevice = (dateFrom = '', dateTo = '') => ({
+  query:
+    '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
+  variables: `{"filter":{"devices":[ {"deviceID":"${DEVICE_CAMPUS_ID}","attrs":["sumEnergyConsumption","sumSurplusReactivePower","maxCampusPowerDemandRushTime","maxCampusPowerDemandNormalTime"]}],"dateFrom":"${dateFrom}","dateTo":"${dateTo}","operationType":0,"lastN":1}}`,
+  isRealTime: true,
+});

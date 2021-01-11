@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => {
       marginTop: -3,
     },
     cardContent: {
-      padding: '0 8px',
+      padding: '0 0px',
       minHeight: 30,
       width: '100%',
       position: 'relative',

@@ -53,5 +53,6 @@ export const getDevicesList = (page, filter) => {
 };
 
 export const getDevicesHistoryParsed = filter => {
+  console.log('getDevicesHistoryParsed', filter);
   return protectAPI(filter);
 };
