@@ -103,7 +103,6 @@ export const ReportFilter = ({ t }) => {
     // 1. Do request
     DeviceService.getDevicesHistoryParsed(queryCampusDevice('', finalDateIso))
       .then(response => {
-        console.log('getCsvCampus', response);
         const campusDict = {
           sumEnergyConsumption: '',
           maxCampusPowerDemandRushTime_value: '',
@@ -139,7 +138,6 @@ export const ReportFilter = ({ t }) => {
             campusDict[field] = entry[key];
           });
         });
-        console.log('campusDict', campusDict);
         // 3. Generates and download CSV
         const csvExporter = new ExportToCsv(csvCampusConfig(dateWhen));
         csvExporter.generateCsv([campusDict]);

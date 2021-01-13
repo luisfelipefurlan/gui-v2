@@ -1,7 +1,7 @@
-// export const DEVICE_CAMPUS_ID = '86ab65';
-// export const COMMON_TEMPLATE_ID = '4';
-export const DEVICE_CAMPUS_ID = '915e12';
-export const COMMON_TEMPLATE_ID = '7';
+export const DEVICE_CAMPUS_ID = '86ab65';
+export const COMMON_TEMPLATE_ID = '4';
+// export const DEVICE_CAMPUS_ID = '915e12';
+// export const COMMON_TEMPLATE_ID = '7';
 
 export const lay = [
   {

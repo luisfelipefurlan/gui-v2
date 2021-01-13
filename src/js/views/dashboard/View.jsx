@@ -2,7 +2,6 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, { useCallback, useEffect } from 'react';
 
-import { DevelopmentContainer } from 'Components/Containers';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
@@ -205,9 +204,7 @@ const Dashboard = props => {
   const getHeaderContent = useCallback(() => {
     return (
       <>
-        <DevelopmentContainer>
-          <ReportFilter t={t} />
-        </DevelopmentContainer>
+        <ReportFilter t={t} />
       </>
     );
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
