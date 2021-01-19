@@ -1,11 +1,7 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayIcon from '@material-ui/icons/PlayArrow';
-import { DevelopmentContainer } from 'Components/Containers';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
@@ -18,9 +14,9 @@ import {
   dashboardLayout,
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
-import { Device as DeviceService } from 'Services';
 
 import { ViewContainer } from '../stateComponents';
+import { ReportFilter } from './report';
 import { AccountWidget } from './widget/account';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
@@ -208,28 +204,7 @@ const Dashboard = props => {
   const getHeaderContent = useCallback(() => {
     return (
       <>
-        <DevelopmentContainer>
-          <Button
-            style={{ marginLeft: 10 }}
-            size='small'
-            variant='outlined'
-            color='inherit'
-            startIcon={<PlayIcon />}
-            onClick={() => startPolling(sagaConfig)}
-          >
-            {t('common:start')}
-          </Button>
-          <Button
-            style={{ marginLeft: 10 }}
-            size='small'
-            variant='outlined'
-            color='inherit'
-            startIcon={<PauseIcon />}
-            onClick={() => stopPolling()}
-          >
-            {t('common:stop')}
-          </Button>
-        </DevelopmentContainer>
+        <ReportFilter t={t} />
       </>
     );
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
