@@ -1,6 +1,6 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -8,12 +8,14 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
+import { queryLastOperation } from 'Redux/data_layout';
 import {
   dashboardConfig,
   dashboardData,
   dashboardLayout,
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
+import { Device as DeviceService } from 'Services';
 
 import { ViewContainer } from '../stateComponents';
 import { ReportFilter } from './report';
@@ -48,12 +50,27 @@ const Dashboard = props => {
   } = props;
 
   const { bar, line, area, table, account, map, csMap } = __CONFIG__;
-
+  const [lastOperation, setLastOperation] = useState({});
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
   }, [history]);
 
   useEffect(() => {
+    // 1. Fetch info about last operation
+    DeviceService.getDevicesHistoryParsed(queryLastOperation)
+      .then(resp => {
+        const { getDeviceHistoryForDashboard } = resp;
+        const deviceHistory = JSON.parse(getDeviceHistoryForDashboard);
+        let attrs = {};
+        deviceHistory.forEach(lin => {
+          attrs = { ...lin, ...attrs };
+        });
+        setLastOperation(attrs);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     if (!_.isEmpty(sagaConfig)) {
       startPolling(sagaConfig);
     }
@@ -152,6 +169,7 @@ const Dashboard = props => {
               <TableWidget
                 id={i}
                 onDelete={onRemoveItem}
+                lastOperation={lastOperation}
                 onPin={onPin}
                 data={data[i]}
                 config={configs[i]}

@@ -1,22 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import { WidgetCard } from 'Components/Cards';
 import { CollapsibleTable } from 'Components/Table';
 import _ from 'lodash';
+import { DEVICE_OPERATION_ID } from 'Redux/data_layout';
 import { formatDate } from 'Utils';
 
-const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
+const TableWidget = ({ id, data, config, onDelete, onPin, lastOperation }) => {
   const { table, meta } = config;
   const withRank = !!meta.withRank;
   const hasTimestamp = !meta.removeTimestamp;
+  const [subHeader, setSubHeader] = useState();
 
-  const renderSubheader = useCallback(() => {
-    if (data && data.length) {
-      const ts = data[0].timestamp;
-      return `Atualizado em: ${formatDate(ts, 'DD/MM/YYYY HH:mm:ss')}`;
+  useEffect(() => {
+    if (lastOperation === {}) return;
+    if (meta) {
+      const ts = lastOperation[`${DEVICE_OPERATION_ID}${meta.timestampField}`];
+      setSubHeader(`Atualizado em: ${formatDate(ts, 'DD/MM/YYYY HH:mm:ss')}`);
     }
-    return null;
-  }, [data]);
+  }, [meta, lastOperation]);
 
   const renderTable = useCallback(() => {
     if (!_.isEmpty(data)) {
@@ -39,7 +41,7 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
       onDelete={onDelete}
       onPin={onPin}
       config={config}
-      subHeader={renderSubheader()}
+      subHeader={subHeader}
     >
       {renderTable()}
     </WidgetCard>

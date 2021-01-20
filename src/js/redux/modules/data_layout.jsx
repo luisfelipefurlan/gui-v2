@@ -1,5 +1,7 @@
 export const DEVICE_CAMPUS_ID = '86ab65';
 export const COMMON_TEMPLATE_ID = '4';
+export const DEVICE_OPERATION_ID = 'fd86b8';
+
 // export const DEVICE_CAMPUS_ID = '915e12';
 // export const COMMON_TEMPLATE_ID = '7';
 
@@ -105,6 +107,7 @@ export const conf = {
   '7/idtable1consumo': {
     meta: {
       title: 'Consumo de Energia',
+      timestampField: 'energyComsuptionLastOperation',
       subTitle: 'Atualizado em:',
       removeTimestamp: true,
       withRank: true,
@@ -126,6 +129,7 @@ export const conf = {
   '7/idtable2demanda': {
     meta: {
       title: 'Demanda de Potência',
+      timestampField: 'PowerDemandLastOperation',
       subTitle: 'Última Atualização: ',
       removeTimestamp: true,
       withRank: true,
@@ -152,6 +156,7 @@ export const conf = {
   '7/idtable4excedente': {
     meta: {
       title: 'Excedente de Reativos',
+      timestampField: 'SurplusReactivePowerLastOperation',
       subTitle: 'Última Atualização: ',
       removeTimestamp: true,
       withRank: true,
@@ -213,3 +218,10 @@ export const queryCampusDevice = (dateFrom = '', dateTo = '') => ({
   variables: `{"filter":{"devices":[ {"deviceID":"${DEVICE_CAMPUS_ID}","attrs":["sumEnergyConsumption","sumSurplusReactivePower","maxCampusPowerDemandRushTime","maxCampusPowerDemandNormalTime"]}],"dateFrom":"${dateFrom}","dateTo":"${dateTo}","operationType":0,"lastN":1}}`,
   isRealTime: true,
 });
+
+export const queryLastOperation = {
+  query:
+    '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
+  variables: `{"filter":{"devices":[ {"deviceID":"${DEVICE_OPERATION_ID}","attrs":["SurplusReactivePowerLastOperation","PowerDemandLastOperation","energyComsuptionLastOperation"]}],"dateFrom":"''","dateTo":"''","operationType":0,"lastN":1}}`,
+  isRealTime: false,
+};
