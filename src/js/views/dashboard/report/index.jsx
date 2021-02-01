@@ -15,6 +15,7 @@ import {
   queryCampusDevice,
 } from 'Redux/data_layout';
 import { Device as DeviceService } from 'Services';
+import { formatDate } from 'Utils';
 
 import useStyles from './style';
 
@@ -57,32 +58,38 @@ export const ReportFilter = ({ t }) => {
         Object.entries(deviceHistory).forEach(([key, values]) => {
           const dev = {
             id: key,
-            energyConsumption: '',
-            maxPowerDemandRushTime_value: '',
-            maxPowerDemandRushTime_ts: '',
-            maxPowerDemandNormalTime_value: '',
-            maxPowerDemandNormalTime_ts: '',
-            surplusReactivePower: '',
+            consumo_energia: '',
+            demanda_potencia_ponta__valor: '',
+            demanda_potencia_ponta__horario: '',
+            demanda_potencia_foraponta__valor: '',
+            demanda_potencia_foraponta__horario: '',
+            excedente_reativos: '',
           };
-          dev.serial = values.serial;
+          dev.serial_number = values.serial;
           dev.label = values.deviceLabel;
-          dev.energyConsumption = values.energyConsumption
+          dev.consumo_energia = values.energyConsumption
             ? values.energyConsumption
             : '';
-          dev.surplusReactivePower = values.surplusReactivePower
+          dev.excedente_reativos = values.surplusReactivePower
             ? values.surplusReactivePower
             : '';
 
-          dev.maxPowerDemandNormalTime_ts = values.maxPowerDemandNormalTime
-            ? values.maxPowerDemandNormalTime.ts
+          dev.demanda_potencia_foraponta__horario = values.maxPowerDemandNormalTime
+            ? formatDate(
+                parseInt(values.maxPowerDemandNormalTime.ts, 10),
+                'DD/MM/YYYY HH:mm:ss',
+              )
             : '';
-          dev.maxPowerDemandNormalTime_value = values.maxPowerDemandNormalTime
+          dev.demanda_potencia_foraponta__valor = values.maxPowerDemandNormalTime
             ? values.maxPowerDemandNormalTime.value
             : '';
-          dev.maxPowerDemandRushTime_ts = values.maxPowerDemandRushTime
-            ? values.maxPowerDemandRushTime.ts
+          dev.demanda_potencia_ponta__horario = values.maxPowerDemandRushTime
+            ? formatDate(
+                parseInt(values.maxPowerDemandNormalTime.ts, 10),
+                'DD/MM/YYYY HH:mm:ss',
+              )
             : '';
-          dev.maxPowerDemandRushTime_value = values.maxPowerDemandRushTime
+          dev.demanda_potencia_ponta__valor = values.maxPowerDemandRushTime
             ? values.maxPowerDemandRushTime.value
             : '';
           devDict.push(dev);
@@ -104,38 +111,45 @@ export const ReportFilter = ({ t }) => {
     DeviceService.getDevicesHistoryParsed(queryCampusDevice('', finalDateIso))
       .then(response => {
         const campusDict = {
-          sumEnergyConsumption: '',
-          maxCampusPowerDemandRushTime_value: '',
-          maxCampusPowerDemandRushTime_ts: '',
-          maxCampusPowerDemandNormalTime_value: '',
-          maxCampusPowerDemandNormalTime_ts: '',
-          sumSurplusReactivePower: '',
+          consumo_energia: '',
+          demanda_potencia_ponta__valor: '',
+          demanda_potencia_ponta__horario: '',
+          demanda_potencia_foraponta__valor: '',
+          demanda_potencia_foraponta__horario: '',
+          excedente_reativos: '',
         };
         const { getDeviceHistoryForDashboard } = response;
         const deviceHistory = JSON.parse(getDeviceHistoryForDashboard);
 
         // 2. Handling data
         deviceHistory.forEach(entry => {
-          // console.log('entry', entry);
           Object.keys(entry).forEach(key => {
             if (key === 'timestamp') return;
-
             const field = key.replace(DEVICE_CAMPUS_ID, '');
 
             if (field === 'maxCampusPowerDemandRushTime') {
-              campusDict.maxCampusPowerDemandRushTime_value = entry[key].value;
-              campusDict.maxCampusPowerDemandRushTime_ts = entry[key].ts;
+              campusDict.demanda_potencia_ponta__valor = entry[key].value;
+              campusDict.demanda_potencia_ponta__horario = formatDate(
+                parseInt(entry[key].ts, 10),
+                'DD/MM/YYYY HH:mm:ss',
+              );
               return;
             }
 
             if (field === 'maxCampusPowerDemandNormalTime') {
-              campusDict.maxCampusPowerDemandNormalTime_value =
-                entry[key].value;
-              campusDict.maxCampusPowerDemandNormalTime_ts = entry[key].ts;
+              campusDict.demanda_potencia_foraponta__valor = entry[key].value;
+              campusDict.demanda_potencia_foraponta__horario = formatDate(
+                parseInt(entry[key].ts, 10),
+                'DD/MM/YYYY HH:mm:ss',
+              );
               return;
             }
-            // case Consumption and Surplus
-            campusDict[field] = entry[key];
+            if (field === 'sumEnergyConsumption') {
+              campusDict.consumo_energia = entry[key];
+            }
+            if (field === 'sumSurplusReactivePower') {
+              campusDict.excedente_reativos = entry[key];
+            }
           });
         });
         // 3. Generates and download CSV
@@ -152,7 +166,7 @@ export const ReportFilter = ({ t }) => {
     // 1. Create the last moment in select month/year
     const dy = new Date(dateWhen);
     const lastMomentOfMonth = new Date(dy.getFullYear(), dy.getMonth() + 2, 0);
-    // + 2 is used to get the corrected month
+    // + 2 is used to get the expected month because day 0 backs one month;
     lastMomentOfMonth.setHours(23, 59, 59, 999);
     const finalDateIso = lastMomentOfMonth.toISOString();
     // 2. Get devices data and create CSV
