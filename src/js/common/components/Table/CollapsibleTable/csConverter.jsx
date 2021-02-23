@@ -28,6 +28,7 @@ export const preManipulationForPowerDemand = (deviceData, rows) => {
       ts: rushTime.ts ? rushTime.ts : 0,
       value: rushTime.value ? rushTime.value : '',
     };
+
     const pdnt = {
       ts: normalTime.ts ? normalTime.ts : 0,
       value: normalTime.value ? normalTime.value : '',
