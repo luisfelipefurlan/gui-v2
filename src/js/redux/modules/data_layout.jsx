@@ -64,7 +64,7 @@ export const sgs = {
   '9/9e3e8451-36da-410e-a925-f84df631c679': {
     query:
       '\nquery getDeviceHistory($filter: HistoryInput!) {\n  getDeviceHistoryForDashboard(filter: $filter)\n}\n',
-    variables: `{"filter":{"devices":[], "templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["energyConsumption"], "staticAttrs":["point"]}],"dateFrom":"","dateTo":"","operationType":6,"lastN":1}}`,
+    variables: `{"filter":{"devices":[], "templates":[{"templateID":"${COMMON_TEMPLATE_ID}","attrs":["current_time"], "staticAttrs":["point"]}],"dateFrom":"","dateTo":"","operationType":6,"lastN":1}}`,
     isRealTime: true,
   },
   '7/idtable1consumo': {

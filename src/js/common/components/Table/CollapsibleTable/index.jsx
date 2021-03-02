@@ -166,7 +166,7 @@ function CustomRow({ index, columns, row, withRank, chartType }) {
         return (
           <pre style={{ textAlign: 'inherit' }}>
             <b style={{ fontSize: '14px' }}>
-              {row[column.dataKey].value.toLocaleString()}
+              {row[column.dataKey].value.toLocaleString('pt-BR')}
             </b>{' '}
             <br />
             {row[column.dataKey].ts === 0
@@ -191,7 +191,7 @@ function CustomRow({ index, columns, row, withRank, chartType }) {
       return (
         <span style={{ textAlign: 'center' }}>
           <b style={{ fontSize: '14px' }}>
-            {row[column.dataKey].toLocaleString(undefined, {
+            {row[column.dataKey].toLocaleString('pt-BR', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}

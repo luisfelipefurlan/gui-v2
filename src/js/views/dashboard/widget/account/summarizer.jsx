@@ -54,7 +54,7 @@ const Summarizer = ({ columns, rows }) => {
     if (row[column.dataKey] === undefined) return null;
     if (column.dataKey.substr(6) === 'maxCampusPowerDemandNormalTime') {
       return row[column.dataKey].value
-        ? row[column.dataKey].value.toLocaleString(undefined, {
+        ? row[column.dataKey].value.toLocaleString('pt-BR', {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1,
           })
@@ -62,14 +62,14 @@ const Summarizer = ({ columns, rows }) => {
     }
     if (column.dataKey.substr(6) === 'maxCampusPowerDemandRushTime') {
       return row[column.dataKey].value
-        ? row[column.dataKey].value.toLocaleString(undefined, {
+        ? row[column.dataKey].value.toLocaleString('pt-BR', {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1,
           })
         : '';
     }
 
-    return row[column.dataKey].toLocaleString(undefined, {
+    return row[column.dataKey].toLocaleString('pt-BR', {
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     });
