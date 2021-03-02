@@ -1,6 +1,8 @@
-export const DEVICE_CAMPUS_ID = '86ab65';
-export const COMMON_TEMPLATE_ID = '4';
-export const DEVICE_OPERATION_ID = 'fd86b8';
+import CONFIG from '../../config.json';
+
+export const { DEVICE_CAMPUS_ID } = CONFIG;
+export const { COMMON_TEMPLATE_ID } = CONFIG;
+export const { DEVICE_OPERATION_ID } = CONFIG;
 
 export const lay = [
   {
