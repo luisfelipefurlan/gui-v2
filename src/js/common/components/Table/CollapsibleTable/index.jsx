@@ -53,8 +53,8 @@ const CollapsibleTable = ({ meta, columns, rows, withRank }) => {
           setSortedArray(
             sortedArray.sort((a, b) =>
               compareAll(
-                a[sortField.field].value,
-                b[sortField.field].value,
+                a[sortField.field] ? a[sortField.field].value : null,
+                b[sortField.field] ? b[sortField.field].value : null,
                 sortField.order,
               ),
             ),
