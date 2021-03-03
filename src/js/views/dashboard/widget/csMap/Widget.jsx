@@ -113,6 +113,10 @@ export default ({ id, onDelete, onPin, data, config }) => {
           >
             <Tooltip>
               <span>{data[key].deviceLabel}</span>
+              <br />
+              <span>
+                {moment(data[key].timestamp).format('HH:mm:ss DD/MM/YY')}
+              </span>
             </Tooltip>
           </Marker>
         );
