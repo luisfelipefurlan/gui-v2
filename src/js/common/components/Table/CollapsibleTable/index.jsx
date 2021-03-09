@@ -60,6 +60,18 @@ const CollapsibleTable = ({ meta, columns, rows, withRank }) => {
             ),
           );
           break;
+        case 'surplusReactivePower':
+          setSortedArray(
+            sortedArray.sort((a, b) =>
+              // 'undefined' was changed to 0, so the data will be at midrange.
+              compareAll(
+                a[sortField.field] ? a[sortField.field].value : 0,
+                b[sortField.field] ? b[sortField.field].value : 0,
+                sortField.order,
+              ),
+            ),
+          );
+          break;
         default:
           setSortedArray(
             sortedArray.sort((a, b) =>
