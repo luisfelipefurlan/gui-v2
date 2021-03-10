@@ -85,7 +85,7 @@ export const ReportFilter = ({ t }) => {
             : '';
           dev.demanda_potencia_ponta__horario = values.maxPowerDemandRushTime
             ? formatDate(
-                parseInt(values.maxPowerDemandNormalTime.ts, 10),
+                parseInt(values.maxPowerDemandRushTime.ts, 10),
                 'DD/MM/YYYY HH:mm:ss',
               )
             : '';

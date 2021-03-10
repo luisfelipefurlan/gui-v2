@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 
+import { ChangeLanguage } from 'Components/ChangeLanguage';
 import { AppHeader } from 'Components/Header';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -26,6 +27,7 @@ const ViewContainer = props => {
       >
         {headerContent && headerContent()}
         <UserInfo />
+        <ChangeLanguage />
       </AppHeader>
       {children}
     </>
