@@ -181,7 +181,7 @@ export const conf = {
     },
     fields: [
       {
-        dataKey: `${DEVICE_CAMPUS_ID}sumSurplusReactivePower`,
+        dataKey: null,
         name: 'Excedente (kVArh)',
         color: '#E85D97',
       },

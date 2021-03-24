@@ -51,7 +51,7 @@ const Summarizer = ({ columns, rows }) => {
   // console.log('row', row);
 
   const ValueFormatter = ({ column }) => {
-    if (row[column.dataKey] === undefined) return null;
+    if (row[column.dataKey] === undefined) return '-';
     if (column.dataKey.substr(6) === 'maxCampusPowerDemandNormalTime') {
       return row[column.dataKey].value
         ? row[column.dataKey].value.toLocaleString('pt-BR', {
